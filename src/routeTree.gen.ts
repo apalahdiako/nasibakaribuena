@@ -10,6 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as KemitraanRouteImport } from './routes/kemitraan'
+import { Route as KontakRouteImport } from './routes/kontak'
+import { Route as LokasiRouteImport } from './routes/lokasi'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as PromoRouteImport } from './routes/promo'
 import { Route as TentangRouteImport } from './routes/tentang'
@@ -19,6 +22,21 @@ import { Route as MenuSlugRouteImport } from './routes/menu.$slug'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KemitraanRoute = KemitraanRouteImport.update({
+  id: '/kemitraan',
+  path: '/kemitraan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KontakRoute = KontakRouteImport.update({
+  id: '/kontak',
+  path: '/kontak',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LokasiRoute = LokasiRouteImport.update({
+  id: '/lokasi',
+  path: '/lokasi',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MenuRoute = MenuRouteImport.update({
@@ -49,6 +67,9 @@ const MenuSlugRoute = MenuSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/kemitraan': typeof KemitraanRoute
+  '/kontak': typeof KontakRoute
+  '/lokasi': typeof LokasiRoute
   '/menu': typeof MenuRouteWithChildren
   '/promo': typeof PromoRoute
   '/tentang': typeof TentangRoute
@@ -57,6 +78,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/kemitraan': typeof KemitraanRoute
+  '/kontak': typeof KontakRoute
+  '/lokasi': typeof LokasiRoute
   '/promo': typeof PromoRoute
   '/tentang': typeof TentangRoute
   '/menu/$slug': typeof MenuSlugRoute
@@ -65,6 +89,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/kemitraan': typeof KemitraanRoute
+  '/kontak': typeof KontakRoute
+  '/lokasi': typeof LokasiRoute
   '/menu': typeof MenuRouteWithChildren
   '/promo': typeof PromoRoute
   '/tentang': typeof TentangRoute
@@ -73,12 +100,32 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/menu' | '/promo' | '/tentang' | '/menu/$slug' | '/menu/'
+  fullPaths:
+    | '/'
+    | '/kemitraan'
+    | '/kontak'
+    | '/lokasi'
+    | '/menu'
+    | '/promo'
+    | '/tentang'
+    | '/menu/$slug'
+    | '/menu/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/promo' | '/tentang' | '/menu/$slug' | '/menu'
+  to:
+    | '/'
+    | '/kemitraan'
+    | '/kontak'
+    | '/lokasi'
+    | '/promo'
+    | '/tentang'
+    | '/menu/$slug'
+    | '/menu'
   id:
     | '__root__'
     | '/'
+    | '/kemitraan'
+    | '/kontak'
+    | '/lokasi'
     | '/menu'
     | '/promo'
     | '/tentang'
@@ -88,6 +135,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  KemitraanRoute: typeof KemitraanRoute
+  KontakRoute: typeof KontakRoute
+  LokasiRoute: typeof LokasiRoute
   MenuRoute: typeof MenuRouteWithChildren
   PromoRoute: typeof PromoRoute
   TentangRoute: typeof TentangRoute
@@ -100,6 +150,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kemitraan': {
+      id: '/kemitraan'
+      path: '/kemitraan'
+      fullPath: '/kemitraan'
+      preLoaderRoute: typeof KemitraanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kontak': {
+      id: '/kontak'
+      path: '/kontak'
+      fullPath: '/kontak'
+      preLoaderRoute: typeof KontakRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lokasi': {
+      id: '/lokasi'
+      path: '/lokasi'
+      fullPath: '/lokasi'
+      preLoaderRoute: typeof LokasiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/menu': {
@@ -154,6 +225,9 @@ const MenuRouteWithChildren = MenuRoute._addFileChildren(MenuRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  KemitraanRoute: KemitraanRoute,
+  KontakRoute: KontakRoute,
+  LokasiRoute: LokasiRoute,
   MenuRoute: MenuRouteWithChildren,
   PromoRoute: PromoRoute,
   TentangRoute: TentangRoute,
