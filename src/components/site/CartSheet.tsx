@@ -1,0 +1,161 @@
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
+import { toast } from "sonner";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { supabase } from "@/integrations/supabase/client";
+import { useCart, buildOrderText } from "@/lib/cart";
+import { rupiah, waLink } from "@/lib/format";
+import { settingsQuery } from "@/lib/queries";
+
+export function CartSheet() {
+  const { items, total, count, open, setOpen, updateQty, remove, clear } = useCart();
+  const { data: settings } = useQuery(settingsQuery);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [sending, setSending] = useState(false);
+
+  async function checkout(channel: "whatsapp" | "gofood" | "grabfood") {
+    if (items.length === 0) return;
+    if (channel === "whatsapp" && name.trim().length < 2) {
+      toast.error("Isi nama pemesan dulu ya.");
+      return;
+    }
+    setSending(true);
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const text = buildOrderText({ items, total, name: name.trim(), address: address.trim(), phone: phone.trim(), origin });
+
+    const { error } = await supabase.from("orders_log").insert({
+      customer_name: name.trim().slice(0, 100),
+      phone: phone.trim().slice(0, 30),
+      address: address.trim().slice(0, 300),
+      items: items.map((i) => ({
+        name: i.name,
+        qty: i.qty,
+        spicy: i.spicy,
+        note: i.note,
+        price: i.price,
+        subtotal: i.price * i.qty,
+      })),
+      total,
+      channel,
+      note: "",
+    });
+    if (error) console.error(error);
+
+    let url = "";
+    if (channel === "whatsapp") url = waLink(settings?.wa_number ?? "6283160599421", text);
+    if (channel === "gofood") url = settings?.gofood_url || "";
+    if (channel === "grabfood") url = settings?.grabfood_url || "";
+
+    setSending(false);
+    if (!url) {
+      toast.error("Link channel ini belum diatur admin. Silakan pesan via WhatsApp.");
+      return;
+    }
+    window.open(url, "_blank", "noopener");
+    toast.success("Pesanan dikirim. Lanjutkan di aplikasi yang terbuka.");
+  }
+
+  return (
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetContent className="flex w-full flex-col gap-0 p-0 sm:max-w-md">
+        <SheetHeader className="border-b border-border px-5 py-4">
+          <SheetTitle className="font-display flex items-center gap-2 text-lg">
+            <ShoppingBag className="h-5 w-5 text-primary" /> Ringkasan Pesanan ({count})
+          </SheetTitle>
+        </SheetHeader>
+
+        <div className="flex-1 space-y-4 overflow-y-auto px-5 py-4">
+          {items.length === 0 && (
+            <p className="py-10 text-center text-sm text-muted-foreground">
+              Keranjang masih kosong. Pilih menu favoritmu dulu ya.
+            </p>
+          )}
+
+          {items.map((item) => (
+            <div key={item.key} className="flex gap-3 rounded-2xl border border-border bg-card p-3">
+              {item.imageUrl ? (
+                <img src={item.imageUrl} alt={item.name} loading="lazy" className="h-16 w-16 rounded-xl object-cover" />
+              ) : null}
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-semibold">{item.name}</p>
+                <p className="text-xs text-muted-foreground">
+                  {item.spicy ?? "Tanpa level pedas"}
+                  {item.note ? ` • ${item.note}` : ""}
+                </p>
+                <p className="mt-1 text-sm font-bold text-primary">{rupiah(item.price * item.qty)}</p>
+              </div>
+              <div className="flex flex-col items-end justify-between">
+                <button onClick={() => remove(item.key)} aria-label="Hapus" className="text-muted-foreground hover:text-destructive">
+                  <Trash2 className="h-4 w-4" />
+                </button>
+                <div className="flex items-center rounded-full border border-border">
+                  <button className="grid h-7 w-7 place-items-center" aria-label="Kurangi" onClick={() => updateQty(item.key, item.qty - 1)}>
+                    <Minus className="h-3.5 w-3.5" />
+                  </button>
+                  <span className="w-5 text-center text-xs font-bold">{item.qty}</span>
+                  <button className="grid h-7 w-7 place-items-center" aria-label="Tambah" onClick={() => updateQty(item.key, item.qty + 1)}>
+                    <Plus className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {items.length > 0 && (
+            <div className="space-y-3 rounded-2xl bg-muted/60 p-4">
+              <div className="grid gap-1.5">
+                <Label htmlFor="cart-name">Nama pemesan</Label>
+                <Input id="cart-name" value={name} maxLength={100} onChange={(e) => setName(e.target.value)} placeholder="Nama kamu" />
+              </div>
+              <div className="grid gap-1.5">
+                <Label htmlFor="cart-phone">No. HP</Label>
+                <Input id="cart-phone" value={phone} maxLength={30} onChange={(e) => setPhone(e.target.value)} placeholder="08xxxxxxxxxx" />
+              </div>
+              <div className="grid gap-1.5">
+                <Label htmlFor="cart-address">Alamat pengantaran</Label>
+                <Textarea
+                  id="cart-address"
+                  value={address}
+                  maxLength={300}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="Alamat lengkap (opsional bila ambil di outlet)"
+                  rows={2}
+                />
+              </div>
+            </div>
+          )}
+        </div>
+
+        {items.length > 0 && (
+          <div className="space-y-3 border-t border-border bg-background px-5 py-4">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-muted-foreground">Total</span>
+              <span className="font-display text-xl font-extrabold text-primary">{rupiah(total)}</span>
+            </div>
+            <Button variant="gold" className="w-full" disabled={sending} onClick={() => checkout("whatsapp")}>
+              Pesan via WhatsApp
+            </Button>
+            <div className="grid grid-cols-2 gap-2">
+              <Button variant="outline" disabled={sending} onClick={() => checkout("gofood")}>
+                GoFood
+              </Button>
+              <Button variant="outline" disabled={sending} onClick={() => checkout("grabfood")}>
+                GrabFood
+              </Button>
+            </div>
+            <button onClick={clear} className="w-full text-center text-xs text-muted-foreground hover:text-destructive">
+              Kosongkan keranjang
+            </button>
+          </div>
+        )}
+      </SheetContent>
+    </Sheet>
+  );
+}
