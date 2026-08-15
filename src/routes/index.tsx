@@ -84,7 +84,7 @@ function Home() {
       <section className="section-pad">
         <div className="mx-auto max-w-3xl px-5 text-center">
           <h2 className="font-display text-2xl leading-snug font-semibold md:text-4xl">
-            <span className="font-script text-4xl md:text-6xl">Ibu Ena</span> berarti nasi bakar rumahan Cirebon.
+            <span className="font-script mr-2 text-4xl md:text-6xl">Ibu Ena</span>berarti nasi bakar rumahan Cirebon.
           </h2>
           <p className="mt-5 text-sm leading-relaxed text-muted-foreground md:text-base">
             Dibakar dengan arang asli, dibungkus daun pisang, dan diulek segar setiap pagi. Mulai{" "}
