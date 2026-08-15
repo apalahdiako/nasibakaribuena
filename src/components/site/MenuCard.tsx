@@ -118,10 +118,11 @@ export function MenuCard({ item }: { item: MenuItem }) {
                   <Plus className="h-4 w-4" />
                 </button>
               </div>
-              <Button className="flex-1" onClick={handleAdd}>
+              <Button className="flex-1 rounded-full" onClick={handleAdd}>
                 <ShoppingBag className="mr-1.5 h-4 w-4" /> Tambah
               </Button>
             </div>
+
           </div>
         )}
       </div>
