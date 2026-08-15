@@ -26,27 +26,20 @@ export function SiteLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur">
-        <div className="container-page flex h-16 items-center justify-between gap-4">
-          <Link to="/" className="flex items-center gap-2">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary font-display text-base font-bold text-primary-foreground">
-              NB
-            </span>
-            <span className="font-display text-base leading-tight font-extrabold text-primary">
-              Nasi Bakar
-              <span className="block text-[0.7rem] font-semibold tracking-widest text-muted-foreground uppercase">
-                Ibu Ena
-              </span>
-            </span>
+      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur">
+        <div className="mx-auto flex h-20 w-full max-w-[92rem] items-center justify-between gap-4 px-5 md:px-10">
+          <Link to="/" className="leading-[0.85]">
+            <span className="block font-script text-2xl font-bold text-foreground md:text-3xl">nasi bakar</span>
+            <span className="block font-script text-2xl font-bold text-foreground md:text-3xl">ibu ena</span>
           </Link>
 
-          <nav className="hidden items-center gap-1 lg:flex">
+          <nav className="hidden items-center gap-8 lg:flex">
             {NAV.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
-                className="rounded-full px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-accent hover:text-accent-foreground"
-                activeProps={{ className: "bg-accent text-accent-foreground" }}
+                className="text-[0.95rem] font-normal text-foreground/85 transition-colors hover:text-foreground"
+                activeProps={{ className: "text-foreground underline underline-offset-8 decoration-[1.5px]" }}
                 activeOptions={{ exact: item.to === "/" }}
               >
                 {item.label}
@@ -55,44 +48,48 @@ export function SiteLayout({ children }: { children: ReactNode }) {
           </nav>
 
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="icon" className="relative rounded-full" onClick={() => setOpen(true)} aria-label="Buka keranjang">
-              <ShoppingBag className="h-4 w-4" />
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              aria-label="Buka keranjang"
+              className="relative grid h-10 w-10 place-items-center text-foreground transition-opacity hover:opacity-70"
+            >
+              <ShoppingBag className="h-5 w-5" />
               {count > 0 && (
-                <span className="absolute -top-1 -right-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-gold px-1 text-[0.65rem] font-bold text-gold-foreground">
+                <span className="absolute top-0 right-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-foreground px-1 text-[0.6rem] font-bold text-background">
                   {count}
                 </span>
               )}
-            </Button>
-            <Button asChild variant="gold" className="hidden sm:inline-flex">
+            </button>
+            <Button asChild size="sm" className="hidden rounded-full px-5 sm:inline-flex">
               <a
                 href={waLink(settings?.wa_number ?? "6283160599421", "Halo Admin Nasi Bakar Ibu Ena, saya mau pesan.")}
                 target="_blank"
                 rel="noreferrer"
               >
-                Pesan Sekarang
+                Order
               </a>
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
+            <button
+              type="button"
+              className="grid h-10 w-10 place-items-center lg:hidden"
               onClick={() => setOpenNav((v) => !v)}
               aria-label="Menu navigasi"
             >
               {openNav ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </Button>
+            </button>
           </div>
         </div>
         {openNav && (
           <nav className="border-t border-border bg-background lg:hidden">
-            <div className="container-page grid gap-1 py-3">
+            <div className="grid gap-1 px-5 py-3">
               {NAV.map((item) => (
                 <Link
                   key={item.to}
                   to={item.to}
                   onClick={() => setOpenNav(false)}
-                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground/85 hover:bg-accent"
-                  activeProps={{ className: "bg-accent text-accent-foreground" }}
+                  className="py-2.5 text-[0.95rem] text-foreground/85"
+                  activeProps={{ className: "font-semibold text-foreground" }}
                   activeOptions={{ exact: item.to === "/" }}
                 >
                   {item.label}
@@ -103,59 +100,25 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         )}
       </header>
 
+
       <main className="flex-1">{children}</main>
 
-      <footer className="mt-auto bg-primary text-primary-foreground">
-        <div className="container-page grid gap-10 py-14 md:grid-cols-4">
-          <div className="md:col-span-1">
-            <p className="font-display text-xl font-extrabold">Nasi Bakar Ibu Ena</p>
-            <p className="mt-3 text-sm text-primary-foreground/75">
-              Nasi bakar daun pisang, dibakar arang asli dengan resep rumahan Cirebon.
+      <footer className="mt-auto border-t border-border bg-background">
+        <div className="mx-auto w-full max-w-[92rem] px-5 py-14 md:px-10">
+          <div className="flex flex-col items-center gap-6 text-center">
+            <p className="font-script text-4xl leading-[0.85] font-bold">
+              nasi bakar
+              <span className="block">ibu ena</span>
             </p>
-          </div>
-          <div>
-            <p className="font-display text-sm font-bold tracking-wider uppercase">Jelajahi</p>
-            <ul className="mt-4 space-y-2 text-sm text-primary-foreground/80">
+            <nav className="flex flex-wrap justify-center gap-x-7 gap-y-2 text-sm text-foreground/75">
               {NAV.map((item) => (
-                <li key={item.to}>
-                  <Link to={item.to} className="hover:text-gold">
-                    {item.label}
-                  </Link>
-                </li>
+                <Link key={item.to} to={item.to} className="hover:text-foreground">
+                  {item.label}
+                </Link>
               ))}
-            </ul>
-          </div>
-          <div>
-            <p className="font-display text-sm font-bold tracking-wider uppercase">Kontak</p>
-            <ul className="mt-4 space-y-3 text-sm text-primary-foreground/80">
-              <li className="flex gap-2">
-                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-                <a href={waLink(settings?.wa_number ?? "6283160599421", "Halo Admin Nasi Bakar Ibu Ena")}>
-                  {settings?.wa_number ?? "6283160599421"}
-                </a>
-              </li>
-              <li className="flex gap-2">
-                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-                <span>{settings?.open_hours ?? "09.00 - 20.00 WIB"}</span>
-              </li>
-              <li className="flex gap-2">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-                <span>Sumber, Kabupaten Cirebon</span>
-              </li>
-              {settings?.instagram_url ? (
-                <li className="flex gap-2">
-                  <Instagram className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-                  <a href={settings.instagram_url} target="_blank" rel="noreferrer">
-                    Instagram
-                  </a>
-                </li>
-              ) : null}
-            </ul>
-          </div>
-          <div>
-            <p className="font-display text-sm font-bold tracking-wider uppercase">Pesan Online</p>
-            <div className="mt-4 flex flex-col gap-2">
-              <Button asChild variant="gold" size="sm">
+            </nav>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Button asChild size="sm" className="rounded-full px-6">
                 <a
                   href={waLink(settings?.wa_number ?? "6283160599421", "Halo Admin Nasi Bakar Ibu Ena, saya mau pesan.")}
                   target="_blank"
@@ -165,31 +128,56 @@ export function SiteLayout({ children }: { children: ReactNode }) {
                 </a>
               </Button>
               {settings?.gofood_url ? (
-                <Button asChild variant="outlineLight" size="sm">
+                <Button asChild size="sm" variant="outline" className="rounded-full px-6">
                   <a href={settings.gofood_url} target="_blank" rel="noreferrer">
                     GoFood
                   </a>
                 </Button>
               ) : null}
               {settings?.grabfood_url ? (
-                <Button asChild variant="outlineLight" size="sm">
+                <Button asChild size="sm" variant="outline" className="rounded-full px-6">
                   <a href={settings.grabfood_url} target="_blank" rel="noreferrer">
                     GrabFood
                   </a>
                 </Button>
               ) : null}
             </div>
+            <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+              <li className="flex items-center gap-2">
+                <Phone className="h-4 w-4" />
+                <a href={waLink(settings?.wa_number ?? "6283160599421", "Halo Admin Nasi Bakar Ibu Ena")}>
+                  {settings?.wa_number ?? "6283160599421"}
+                </a>
+              </li>
+              <li className="flex items-center gap-2">
+                <Clock className="h-4 w-4" />
+                <span>{settings?.open_hours ?? "09.00 - 20.00 WIB"}</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <MapPin className="h-4 w-4" />
+                <span>Sumber, Kabupaten Cirebon</span>
+              </li>
+              {settings?.instagram_url ? (
+                <li className="flex items-center gap-2">
+                  <Instagram className="h-4 w-4" />
+                  <a href={settings.instagram_url} target="_blank" rel="noreferrer">
+                    Instagram
+                  </a>
+                </li>
+              ) : null}
+            </ul>
           </div>
         </div>
-        <div className="border-t border-primary-foreground/15">
-          <div className="container-page flex flex-col gap-2 py-5 text-xs text-primary-foreground/65 sm:flex-row sm:items-center sm:justify-between">
+        <div className="border-t border-border">
+          <div className="mx-auto flex w-full max-w-[92rem] flex-col gap-2 px-5 py-5 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between md:px-10">
             <span>© {new Date().getFullYear()} Nasi Bakar Ibu Ena. Semua hak cipta dilindungi.</span>
-            <Link to="/admin" className="hover:text-gold">
+            <Link to="/admin" className="hover:text-foreground">
               Login Admin
             </Link>
           </div>
         </div>
       </footer>
+
 
       <CartSheet />
       <ChatWidget />

@@ -34,8 +34,8 @@ export function MenuCard({ item }: { item: MenuItem }) {
   }
 
   return (
-    <article className="lift flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
-      <div className="relative aspect-4/3 overflow-hidden bg-muted">
+    <article className="flex h-full flex-col overflow-hidden border border-border bg-card">
+      <div className="relative aspect-square overflow-hidden bg-muted">
         {item.image_url ? (
           <img
             src={item.image_url}
@@ -45,7 +45,7 @@ export function MenuCard({ item }: { item: MenuItem }) {
           />
         ) : null}
         {item.badge ? (
-          <span className="absolute top-3 left-3 rounded-full bg-gold px-3 py-1 text-xs font-bold text-gold-foreground">
+          <span className="absolute top-3 left-3 bg-foreground px-3 py-1 text-[0.65rem] font-semibold tracking-wider text-background uppercase">
             {item.badge}
           </span>
         ) : null}
@@ -56,29 +56,30 @@ export function MenuCard({ item }: { item: MenuItem }) {
         ) : null}
       </div>
 
-      <div className="flex flex-1 flex-col gap-3 p-5">
+      <div className="flex flex-1 flex-col gap-3 p-5 text-center">
         <div>
-          <p className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">{item.category}</p>
-          <h3 className="mt-1 font-display text-lg font-bold text-foreground">{item.name}</h3>
-          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+          <p className="text-[0.65rem] font-medium tracking-[0.2em] text-muted-foreground uppercase">{item.category}</p>
+          <h3 className="mt-1.5 font-display text-lg font-semibold text-foreground">{item.name}</h3>
+          <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
         </div>
 
-        <p className="font-display text-xl font-extrabold text-primary">{rupiah(item.price)}</p>
+        <p className="font-display text-lg font-semibold text-foreground">{rupiah(item.price)}</p>
+
 
         {!soldOut && (
           <div className="mt-auto space-y-3">
             {item.has_spicy_option && (
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap justify-center gap-1.5">
                 {LEVELS.map((lv) => (
                   <button
                     key={lv}
                     type="button"
                     onClick={() => setSpicy(lv)}
                     className={
-                      "rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors " +
+                      "rounded-full border px-3 py-1.5 text-xs font-medium transition-colors " +
                       (spicy === lv
-                        ? "border-primary bg-primary text-primary-foreground"
-                        : "border-border bg-background text-muted-foreground hover:bg-accent")
+                        ? "border-foreground bg-foreground text-background"
+                        : "border-border bg-background text-muted-foreground hover:border-foreground/40")
                     }
                   >
                     {lv}
@@ -86,6 +87,7 @@ export function MenuCard({ item }: { item: MenuItem }) {
                 ))}
               </div>
             )}
+
 
             <Textarea
               value={note}
@@ -116,10 +118,11 @@ export function MenuCard({ item }: { item: MenuItem }) {
                   <Plus className="h-4 w-4" />
                 </button>
               </div>
-              <Button className="flex-1" onClick={handleAdd}>
+              <Button className="flex-1 rounded-full" onClick={handleAdd}>
                 <ShoppingBag className="mr-1.5 h-4 w-4" /> Tambah
               </Button>
             </div>
+
           </div>
         )}
       </div>
