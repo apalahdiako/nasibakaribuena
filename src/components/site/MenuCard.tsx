@@ -69,17 +69,17 @@ export function MenuCard({ item }: { item: MenuItem }) {
         {!soldOut && (
           <div className="mt-auto space-y-3">
             {item.has_spicy_option && (
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap justify-center gap-1.5">
                 {LEVELS.map((lv) => (
                   <button
                     key={lv}
                     type="button"
                     onClick={() => setSpicy(lv)}
                     className={
-                      "rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors " +
+                      "rounded-full border px-3 py-1.5 text-xs font-medium transition-colors " +
                       (spicy === lv
-                        ? "border-primary bg-primary text-primary-foreground"
-                        : "border-border bg-background text-muted-foreground hover:bg-accent")
+                        ? "border-foreground bg-foreground text-background"
+                        : "border-border bg-background text-muted-foreground hover:border-foreground/40")
                     }
                   >
                     {lv}
@@ -87,6 +87,7 @@ export function MenuCard({ item }: { item: MenuItem }) {
                 ))}
               </div>
             )}
+
 
             <Textarea
               value={note}
