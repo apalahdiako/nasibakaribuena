@@ -45,86 +45,89 @@ function Home() {
 
   return (
     <SiteLayout>
-      {/* HERO */}
-      <section className="relative overflow-hidden bg-primary text-primary-foreground">
-        <div className="container-page grid items-center gap-10 py-14 md:grid-cols-2 md:py-24">
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-primary-foreground/10 px-3 py-1 text-xs font-semibold tracking-wider uppercase">
-              <Flame className="h-3.5 w-3.5 text-gold" /> Dibakar arang asli
-            </span>
-            <h1 className="mt-5 font-display text-4xl leading-[1.05] font-extrabold sm:text-5xl md:text-6xl">
+      {/* HERO — full bleed seperti Kopi Kenangan */}
+      <section className="relative">
+        <img
+          src={settings?.hero_image_url ?? "/images/hero.jpg"}
+          alt="Nasi bakar daun pisang dibakar di atas arang"
+          width={1600}
+          height={1104}
+          className="h-[58vh] w-full object-cover md:h-[72vh]"
+        />
+        <div className="absolute inset-0 flex items-end justify-center bg-foreground/25 pb-10 md:pb-16">
+          <div className="px-5 text-center text-background">
+            <h1 className="font-display text-3xl leading-tight font-semibold md:text-5xl">
               {settings?.hero_title ?? "Nasi Bakar Ibu Ena"}
             </h1>
-            <p className="mt-4 max-w-md text-base text-primary-foreground/80 md:text-lg">
+            <p className="mx-auto mt-3 max-w-xl text-sm text-background/90 md:text-base">
               {settings?.hero_subtitle ?? "Dibakar arang asli, resep rumahan Cirebon turun-temurun."}
             </p>
-            <p className="mt-6 text-sm text-primary-foreground/70">
-              Mulai dari <span className="font-display text-2xl font-extrabold text-gold">{rupiah(termurah)}</span> per bungkus
-            </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Button asChild variant="gold" size="lg">
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              <Button asChild size="lg" className="rounded-full bg-background px-7 text-foreground hover:bg-background/90">
                 <a
                   href={waLink(settings?.wa_number ?? "6283160599421", "Halo Admin Nasi Bakar Ibu Ena, saya mau pesan.")}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Pesan Sekarang
+                  Order Sekarang
                 </a>
               </Button>
-              <Button asChild variant="outlineLight" size="lg">
+              <Button asChild size="lg" variant="outlineLight" className="rounded-full px-7">
                 <Link to="/menu">Lihat Menu</Link>
               </Button>
             </div>
           </div>
-          <div className="relative">
-            <img
-              src={settings?.hero_image_url ?? "/images/hero.jpg"}
-              alt="Nasi bakar daun pisang dibakar di atas arang"
-              width={1600}
-              height={1104}
-              className="w-full rounded-[2rem] object-cover shadow-lift"
-            />
-          </div>
+        </div>
+      </section>
+
+      {/* STATEMENT */}
+      <section className="section-pad">
+        <div className="mx-auto max-w-3xl px-5 text-center">
+          <h2 className="font-display text-2xl leading-snug font-semibold md:text-4xl">
+            <span className="font-script text-4xl md:text-6xl">Ibu Ena</span> berarti nasi bakar rumahan Cirebon.
+          </h2>
+          <p className="mt-5 text-sm leading-relaxed text-muted-foreground md:text-base">
+            Dibakar dengan arang asli, dibungkus daun pisang, dan diulek segar setiap pagi. Mulai{" "}
+            <span className="font-semibold text-foreground">{rupiah(termurah)}</span> per bungkus.
+          </p>
         </div>
       </section>
 
       {/* MENU ANDALAN */}
-      <section className="section-pad">
-        <div className="container-page">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="text-xs font-bold tracking-widest text-gold uppercase">Menu Andalan</p>
-              <h2 className="mt-2 font-display text-3xl font-extrabold md:text-4xl">Paling sering dipesan</h2>
-            </div>
-            <Button asChild variant="outline">
-              <Link to="/menu">
-                Semua menu <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
+      <section className="pb-14 md:pb-24">
+        <div className="mx-auto w-full max-w-[92rem] px-5 md:px-10">
+          <div className="text-center">
+            <h2 className="font-display text-xl font-semibold tracking-[0.18em] uppercase md:text-2xl">Menu Andalan</h2>
           </div>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {unggulan.map((item) => (
               <MenuCard key={item.id} item={item} />
             ))}
           </div>
+          <div className="mt-10 text-center">
+            <Button asChild variant="outline" className="rounded-full px-7">
+              <Link to="/menu">
+                Lihat semua menu <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
 
-      {/* VALUE */}
-      <section className="section-pad bg-sage/35">
-        <div className="container-page">
-          <p className="text-xs font-bold tracking-widest text-primary uppercase">Kenapa Pilih Ibu Ena</p>
-          <h2 className="mt-2 max-w-xl font-display text-3xl font-extrabold md:text-4xl">
-            Rasa rumahan yang dijaga sejak dapur pertama
+      {/* VALUE — 3-4 kolom bersih */}
+      <section className="section-pad border-y border-border bg-secondary/60">
+        <div className="mx-auto w-full max-w-[92rem] px-5 md:px-10">
+          <h2 className="text-center font-display text-xl font-semibold tracking-[0.18em] uppercase md:text-2xl">
+            Kenapa Ibu Ena
           </h2>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid gap-10 text-center sm:grid-cols-2 lg:grid-cols-4">
             {VALUES.map((v) => (
-              <div key={v.title} className="rounded-3xl bg-card p-6 shadow-soft">
-                <span className="grid h-11 w-11 place-items-center rounded-2xl bg-primary text-primary-foreground">
+              <div key={v.title}>
+                <span className="mx-auto grid h-12 w-12 place-items-center rounded-full border border-foreground/15">
                   <v.icon className="h-5 w-5" />
                 </span>
-                <h3 className="mt-4 font-display text-base font-bold">{v.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{v.desc}</p>
+                <h3 className="mt-4 font-display text-base font-semibold">{v.title}</h3>
+                <p className="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-muted-foreground">{v.desc}</p>
               </div>
             ))}
           </div>
@@ -134,22 +137,21 @@ function Home() {
       {/* PROMO */}
       {promoAktif.length > 0 && (
         <section className="section-pad">
-          <div className="container-page">
-            <p className="text-xs font-bold tracking-widest text-gold uppercase">Promo Berjalan</p>
-            <h2 className="mt-2 font-display text-3xl font-extrabold md:text-4xl">Hemat hari ini</h2>
-            <div className="mt-8 grid gap-6 md:grid-cols-2">
-              {promoAktif.slice(0, 4).map((p) => (
-                <article key={p.id} className="lift overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
+          <div className="mx-auto w-full max-w-[92rem] px-5 md:px-10">
+            <h2 className="text-center font-display text-xl font-semibold tracking-[0.18em] uppercase md:text-2xl">
+              Promo of the Month
+            </h2>
+            <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {promoAktif.slice(0, 3).map((p) => (
+                <article key={p.id} className="text-center">
                   {p.image_url ? (
-                    <img src={p.image_url} alt={p.title} loading="lazy" className="h-44 w-full object-cover" />
+                    <img src={p.image_url} alt={p.title} loading="lazy" className="aspect-square w-full object-cover" />
                   ) : null}
-                  <div className="p-6">
-                    <h3 className="font-display text-lg font-bold">{p.title}</h3>
-                    <p className="mt-2 text-sm text-muted-foreground">{p.description}</p>
-                    {p.end_date ? (
-                      <p className="mt-3 text-xs font-semibold text-primary">Berlaku sampai {tanggal(p.end_date)}</p>
-                    ) : null}
-                  </div>
+                  <h3 className="mt-4 font-display text-lg font-semibold">{p.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.description}</p>
+                  {p.end_date ? (
+                    <p className="mt-2 text-xs font-medium text-muted-foreground">Berlaku sampai {tanggal(p.end_date)}</p>
+                  ) : null}
                 </article>
               ))}
             </div>
@@ -158,64 +160,66 @@ function Home() {
       )}
 
       {/* TENTANG */}
-      <section className="section-pad bg-cream">
-        <div className="container-page grid items-center gap-10 md:grid-cols-2">
+      <section className="border-t border-border">
+        <div className="grid md:grid-cols-2">
           <img
             src="/images/about-dapur.jpg"
             alt="Proses membungkus nasi bakar dengan daun pisang"
             loading="lazy"
             width={1200}
             height={800}
-            className="w-full rounded-[2rem] object-cover shadow-soft"
+            className="h-72 w-full object-cover md:h-full"
           />
-          <div>
-            <p className="text-xs font-bold tracking-widest text-gold uppercase">Tentang Ibu Ena</p>
-            <h2 className="mt-2 font-display text-3xl font-extrabold md:text-4xl">Dari dapur rumah di Sumber, Cirebon</h2>
-            <p className="mt-4 line-clamp-6 text-sm leading-relaxed text-muted-foreground md:text-base">
-              {settings?.about_text}
-            </p>
-            <Button asChild variant="outline" className="mt-6">
-              <Link to="/tentang">
-                Baca cerita lengkap <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
+          <div className="flex items-center px-5 py-14 md:px-14">
+            <div>
+              <h2 className="font-display text-2xl font-semibold md:text-3xl">Dari dapur rumah di Sumber, Cirebon</h2>
+              <p className="mt-4 line-clamp-6 text-sm leading-relaxed text-muted-foreground md:text-base">
+                {settings?.about_text}
+              </p>
+              <Button asChild variant="outline" className="mt-6 rounded-full px-7">
+                <Link to="/tentang">
+                  Baca cerita lengkap <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
       {/* LOKASI */}
-      <section className="section-pad">
-        <div className="container-page">
-          <p className="text-xs font-bold tracking-widest text-gold uppercase">Outlet & Delivery</p>
-          <h2 className="mt-2 font-display text-3xl font-extrabold md:text-4xl">Kami ada di dekat kamu</h2>
-          <div className="mt-8 grid gap-5 md:grid-cols-2">
+      <section className="section-pad border-t border-border">
+        <div className="mx-auto w-full max-w-[92rem] px-5 md:px-10">
+          <h2 className="text-center font-display text-xl font-semibold tracking-[0.18em] uppercase md:text-2xl">
+            Outlet & Delivery
+          </h2>
+          <div className="mt-10 grid gap-6 md:grid-cols-2">
             {outlets.map((o) => (
-              <div key={o.id} className="rounded-3xl border border-border bg-card p-6 shadow-soft">
+              <div key={o.id} className="border border-border p-6">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-display text-lg font-bold">{o.name}</h3>
+                  <h3 className="font-display text-lg font-semibold">{o.name}</h3>
                   <span
                     className={
-                      "rounded-full px-3 py-1 text-xs font-bold " +
-                      (o.is_open ? "bg-sage text-sage-foreground" : "bg-muted text-muted-foreground")
+                      "rounded-full px-3 py-1 text-xs font-semibold " +
+                      (o.is_open ? "bg-foreground text-background" : "bg-muted text-muted-foreground")
                     }
                   >
                     {o.is_open ? "Buka" : "Tutup"}
                   </span>
                 </div>
                 <p className="mt-3 flex gap-2 text-sm text-muted-foreground">
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" /> {o.address}
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0" /> {o.address}
                 </p>
                 <p className="mt-2 flex gap-2 text-sm text-muted-foreground">
-                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-primary" /> {o.open_hours}
+                  <Clock className="mt-0.5 h-4 w-4 shrink-0" /> {o.open_hours}
                 </p>
               </div>
             ))}
-            <div className="rounded-3xl bg-primary p-6 text-primary-foreground shadow-soft">
-              <h3 className="font-display text-lg font-bold">Area Delivery</h3>
-              <p className="mt-3 text-sm text-primary-foreground/80">
+            <div className="bg-foreground p-6 text-background">
+              <h3 className="font-display text-lg font-semibold">Area Delivery</h3>
+              <p className="mt-3 text-sm text-background/80">
                 {settings?.delivery_area ?? "Area Cirebon"}. Pesan lewat WhatsApp untuk cek ongkir dan estimasi pengantaran.
               </p>
-              <Button asChild variant="gold" className="mt-5">
+              <Button asChild variant="outlineLight" className="mt-5 rounded-full px-7">
                 <Link to="/lokasi">Detail lokasi</Link>
               </Button>
             </div>
@@ -225,3 +229,4 @@ function Home() {
     </SiteLayout>
   );
 }
+
