@@ -26,27 +26,20 @@ export function SiteLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur">
-        <div className="container-page flex h-16 items-center justify-between gap-4">
-          <Link to="/" className="flex items-center gap-2">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary font-display text-base font-bold text-primary-foreground">
-              NB
-            </span>
-            <span className="font-display text-base leading-tight font-extrabold text-primary">
-              Nasi Bakar
-              <span className="block text-[0.7rem] font-semibold tracking-widest text-muted-foreground uppercase">
-                Ibu Ena
-              </span>
-            </span>
+      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur">
+        <div className="mx-auto flex h-20 w-full max-w-[92rem] items-center justify-between gap-4 px-5 md:px-10">
+          <Link to="/" className="leading-[0.85]">
+            <span className="block font-script text-2xl font-bold text-foreground md:text-3xl">nasi bakar</span>
+            <span className="block font-script text-2xl font-bold text-foreground md:text-3xl">ibu ena</span>
           </Link>
 
-          <nav className="hidden items-center gap-1 lg:flex">
+          <nav className="hidden items-center gap-8 lg:flex">
             {NAV.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
-                className="rounded-full px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-accent hover:text-accent-foreground"
-                activeProps={{ className: "bg-accent text-accent-foreground" }}
+                className="text-[0.95rem] font-normal text-foreground/85 transition-colors hover:text-foreground"
+                activeProps={{ className: "text-foreground underline underline-offset-8 decoration-[1.5px]" }}
                 activeOptions={{ exact: item.to === "/" }}
               >
                 {item.label}
@@ -55,44 +48,48 @@ export function SiteLayout({ children }: { children: ReactNode }) {
           </nav>
 
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="icon" className="relative rounded-full" onClick={() => setOpen(true)} aria-label="Buka keranjang">
-              <ShoppingBag className="h-4 w-4" />
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              aria-label="Buka keranjang"
+              className="relative grid h-10 w-10 place-items-center text-foreground transition-opacity hover:opacity-70"
+            >
+              <ShoppingBag className="h-5 w-5" />
               {count > 0 && (
-                <span className="absolute -top-1 -right-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-gold px-1 text-[0.65rem] font-bold text-gold-foreground">
+                <span className="absolute top-0 right-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-foreground px-1 text-[0.6rem] font-bold text-background">
                   {count}
                 </span>
               )}
-            </Button>
-            <Button asChild variant="gold" className="hidden sm:inline-flex">
+            </button>
+            <Button asChild size="sm" className="hidden rounded-full px-5 sm:inline-flex">
               <a
                 href={waLink(settings?.wa_number ?? "6283160599421", "Halo Admin Nasi Bakar Ibu Ena, saya mau pesan.")}
                 target="_blank"
                 rel="noreferrer"
               >
-                Pesan Sekarang
+                Order
               </a>
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
+            <button
+              type="button"
+              className="grid h-10 w-10 place-items-center lg:hidden"
               onClick={() => setOpenNav((v) => !v)}
               aria-label="Menu navigasi"
             >
               {openNav ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </Button>
+            </button>
           </div>
         </div>
         {openNav && (
           <nav className="border-t border-border bg-background lg:hidden">
-            <div className="container-page grid gap-1 py-3">
+            <div className="grid gap-1 px-5 py-3">
               {NAV.map((item) => (
                 <Link
                   key={item.to}
                   to={item.to}
                   onClick={() => setOpenNav(false)}
-                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground/85 hover:bg-accent"
-                  activeProps={{ className: "bg-accent text-accent-foreground" }}
+                  className="py-2.5 text-[0.95rem] text-foreground/85"
+                  activeProps={{ className: "font-semibold text-foreground" }}
                   activeOptions={{ exact: item.to === "/" }}
                 >
                   {item.label}
@@ -102,6 +99,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
           </nav>
         )}
       </header>
+
 
       <main className="flex-1">{children}</main>
 
