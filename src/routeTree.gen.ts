@@ -18,6 +18,13 @@ import { Route as MenuRouteImport } from './routes/menu'
 import { Route as PromoRouteImport } from './routes/promo'
 import { Route as TentangRouteImport } from './routes/tentang'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminAnalitikRouteImport } from './routes/admin.analitik'
+import { Route as AdminInboxRouteImport } from './routes/admin.inbox'
+import { Route as AdminMenuRouteImport } from './routes/admin.menu'
+import { Route as AdminPelangganRouteImport } from './routes/admin.pelanggan'
+import { Route as AdminPengaturanRouteImport } from './routes/admin.pengaturan'
+import { Route as AdminPesananRouteImport } from './routes/admin.pesanan'
+import { Route as AdminPromoRouteImport } from './routes/admin.promo'
 import { Route as MenuIndexRouteImport } from './routes/menu.index'
 import { Route as MenuSlugRouteImport } from './routes/menu.$slug'
 
@@ -66,6 +73,41 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminAnalitikRoute = AdminAnalitikRouteImport.update({
+  id: '/analitik',
+  path: '/analitik',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminInboxRoute = AdminInboxRouteImport.update({
+  id: '/inbox',
+  path: '/inbox',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMenuRoute = AdminMenuRouteImport.update({
+  id: '/menu',
+  path: '/menu',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPelangganRoute = AdminPelangganRouteImport.update({
+  id: '/pelanggan',
+  path: '/pelanggan',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPengaturanRoute = AdminPengaturanRouteImport.update({
+  id: '/pengaturan',
+  path: '/pengaturan',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPesananRoute = AdminPesananRouteImport.update({
+  id: '/pesanan',
+  path: '/pesanan',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPromoRoute = AdminPromoRouteImport.update({
+  id: '/promo',
+  path: '/promo',
+  getParentRoute: () => AdminRoute,
+} as any)
 const MenuIndexRoute = MenuIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -86,6 +128,13 @@ export interface FileRoutesByFullPath {
   '/menu': typeof MenuRouteWithChildren
   '/promo': typeof PromoRoute
   '/tentang': typeof TentangRoute
+  '/admin/analitik': typeof AdminAnalitikRoute
+  '/admin/inbox': typeof AdminInboxRoute
+  '/admin/menu': typeof AdminMenuRoute
+  '/admin/pelanggan': typeof AdminPelangganRoute
+  '/admin/pengaturan': typeof AdminPengaturanRoute
+  '/admin/pesanan': typeof AdminPesananRoute
+  '/admin/promo': typeof AdminPromoRoute
   '/menu/$slug': typeof MenuSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/menu/': typeof MenuIndexRoute
@@ -97,6 +146,13 @@ export interface FileRoutesByTo {
   '/lokasi': typeof LokasiRoute
   '/promo': typeof PromoRoute
   '/tentang': typeof TentangRoute
+  '/admin/analitik': typeof AdminAnalitikRoute
+  '/admin/inbox': typeof AdminInboxRoute
+  '/admin/menu': typeof AdminMenuRoute
+  '/admin/pelanggan': typeof AdminPelangganRoute
+  '/admin/pengaturan': typeof AdminPengaturanRoute
+  '/admin/pesanan': typeof AdminPesananRoute
+  '/admin/promo': typeof AdminPromoRoute
   '/menu/$slug': typeof MenuSlugRoute
   '/admin': typeof AdminIndexRoute
   '/menu': typeof MenuIndexRoute
@@ -111,6 +167,13 @@ export interface FileRoutesById {
   '/menu': typeof MenuRouteWithChildren
   '/promo': typeof PromoRoute
   '/tentang': typeof TentangRoute
+  '/admin/analitik': typeof AdminAnalitikRoute
+  '/admin/inbox': typeof AdminInboxRoute
+  '/admin/menu': typeof AdminMenuRoute
+  '/admin/pelanggan': typeof AdminPelangganRoute
+  '/admin/pengaturan': typeof AdminPengaturanRoute
+  '/admin/pesanan': typeof AdminPesananRoute
+  '/admin/promo': typeof AdminPromoRoute
   '/menu/$slug': typeof MenuSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/menu/': typeof MenuIndexRoute
@@ -126,6 +189,13 @@ export interface FileRouteTypes {
     | '/menu'
     | '/promo'
     | '/tentang'
+    | '/admin/analitik'
+    | '/admin/inbox'
+    | '/admin/menu'
+    | '/admin/pelanggan'
+    | '/admin/pengaturan'
+    | '/admin/pesanan'
+    | '/admin/promo'
     | '/menu/$slug'
     | '/admin/'
     | '/menu/'
@@ -137,6 +207,13 @@ export interface FileRouteTypes {
     | '/lokasi'
     | '/promo'
     | '/tentang'
+    | '/admin/analitik'
+    | '/admin/inbox'
+    | '/admin/menu'
+    | '/admin/pelanggan'
+    | '/admin/pengaturan'
+    | '/admin/pesanan'
+    | '/admin/promo'
     | '/menu/$slug'
     | '/admin'
     | '/menu'
@@ -150,6 +227,13 @@ export interface FileRouteTypes {
     | '/menu'
     | '/promo'
     | '/tentang'
+    | '/admin/analitik'
+    | '/admin/inbox'
+    | '/admin/menu'
+    | '/admin/pelanggan'
+    | '/admin/pengaturan'
+    | '/admin/pesanan'
+    | '/admin/promo'
     | '/menu/$slug'
     | '/admin/'
     | '/menu/'
@@ -231,6 +315,55 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/analitik': {
+      id: '/admin/analitik'
+      path: '/analitik'
+      fullPath: '/admin/analitik'
+      preLoaderRoute: typeof AdminAnalitikRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/inbox': {
+      id: '/admin/inbox'
+      path: '/inbox'
+      fullPath: '/admin/inbox'
+      preLoaderRoute: typeof AdminInboxRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/menu': {
+      id: '/admin/menu'
+      path: '/menu'
+      fullPath: '/admin/menu'
+      preLoaderRoute: typeof AdminMenuRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/pelanggan': {
+      id: '/admin/pelanggan'
+      path: '/pelanggan'
+      fullPath: '/admin/pelanggan'
+      preLoaderRoute: typeof AdminPelangganRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/pengaturan': {
+      id: '/admin/pengaturan'
+      path: '/pengaturan'
+      fullPath: '/admin/pengaturan'
+      preLoaderRoute: typeof AdminPengaturanRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/pesanan': {
+      id: '/admin/pesanan'
+      path: '/pesanan'
+      fullPath: '/admin/pesanan'
+      preLoaderRoute: typeof AdminPesananRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/promo': {
+      id: '/admin/promo'
+      path: '/promo'
+      fullPath: '/admin/promo'
+      preLoaderRoute: typeof AdminPromoRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/menu/': {
       id: '/menu/'
       path: '/'
@@ -249,10 +382,24 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminAnalitikRoute: typeof AdminAnalitikRoute
+  AdminInboxRoute: typeof AdminInboxRoute
+  AdminMenuRoute: typeof AdminMenuRoute
+  AdminPelangganRoute: typeof AdminPelangganRoute
+  AdminPengaturanRoute: typeof AdminPengaturanRoute
+  AdminPesananRoute: typeof AdminPesananRoute
+  AdminPromoRoute: typeof AdminPromoRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAnalitikRoute: AdminAnalitikRoute,
+  AdminInboxRoute: AdminInboxRoute,
+  AdminMenuRoute: AdminMenuRoute,
+  AdminPelangganRoute: AdminPelangganRoute,
+  AdminPengaturanRoute: AdminPengaturanRoute,
+  AdminPesananRoute: AdminPesananRoute,
+  AdminPromoRoute: AdminPromoRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
