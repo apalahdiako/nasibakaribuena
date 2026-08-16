@@ -67,7 +67,10 @@ function MenuAdmin() {
       ? await supabase.from("menu_items").update(payload).eq("id", draft.id)
       : await supabase.from("menu_items").insert(payload);
     setBusy(false);
-    if (res.error) return toast.error(res.error.message);
+    if (res.error) {
+      toast.error(res.error.message);
+      return;
+    }
     void logActivity(draft.id ? "ubah menu" : "tambah menu", "menu_items", payload.name);
     toast.success("Menu tersimpan");
     setDraft(null);
@@ -85,7 +88,10 @@ function MenuAdmin() {
   async function remove(item: MenuItem) {
     if (!confirm(`Hapus ${item.name}?`)) return;
     const { error } = await supabase.from("menu_items").update({ is_deleted: true }).eq("id", item.id);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     void logActivity("hapus menu", "menu_items", item.name);
     qc.invalidateQueries({ queryKey: ["menu_items"] });
   }
