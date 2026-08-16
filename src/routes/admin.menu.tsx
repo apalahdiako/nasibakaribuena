@@ -46,7 +46,10 @@ function MenuAdmin() {
   useRealtime({ channelName: "menu-admin", tables: { menu_items: ["menu_items"] } });
 
   async function save() {
-    if (!draft?.name) return toast.error("Nama menu wajib diisi");
+    if (!draft?.name) {
+      toast.error("Nama menu wajib diisi");
+      return;
+    }
     setBusy(true);
     const payload = {
       name: draft.name,
