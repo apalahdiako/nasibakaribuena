@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      activity_log: {
+        Row: {
+          action: string
+          actor_email: string
+          created_at: string
+          detail: string
+          entity: string
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          actor_email?: string
+          created_at?: string
+          detail?: string
+          entity?: string
+          id?: string
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          actor_email?: string
+          created_at?: string
+          detail?: string
+          entity?: string
+          id?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       chat_messages: {
         Row: {
           content: string
@@ -48,6 +78,8 @@ export type Database = {
       }
       chat_sessions: {
         Row: {
+          admin_typing: boolean
+          assigned_to: string | null
           created_at: string
           id: string
           last_message_at: string
@@ -55,6 +87,8 @@ export type Database = {
           visitor_name: string | null
         }
         Insert: {
+          admin_typing?: boolean
+          assigned_to?: string | null
           created_at?: string
           id?: string
           last_message_at?: string
@@ -62,6 +96,8 @@ export type Database = {
           visitor_name?: string | null
         }
         Update: {
+          admin_typing?: boolean
+          assigned_to?: string | null
           created_at?: string
           id?: string
           last_message_at?: string
@@ -130,9 +166,12 @@ export type Database = {
           id: string
           items: Json
           note: string | null
+          order_no: number
+          payment_method: string
           phone: string
           status: string
           total: number
+          updated_at: string
         }
         Insert: {
           address?: string
@@ -142,9 +181,12 @@ export type Database = {
           id?: string
           items?: Json
           note?: string | null
+          order_no?: number
+          payment_method?: string
           phone?: string
           status?: string
           total?: number
+          updated_at?: string
         }
         Update: {
           address?: string
@@ -154,9 +196,12 @@ export type Database = {
           id?: string
           items?: Json
           note?: string | null
+          order_no?: number
+          payment_method?: string
           phone?: string
           status?: string
           total?: number
+          updated_at?: string
         }
         Relationships: []
       }
@@ -225,39 +270,65 @@ export type Database = {
       }
       promos: {
         Row: {
+          clicks: number
           created_at: string
           description: string
           end_date: string | null
           id: string
           image_url: string | null
+          impressions: number
           is_active: boolean
+          menu_item_id: string | null
+          original_price: number | null
+          placement: string
+          promo_price: number | null
           start_date: string | null
           title: string
           updated_at: string
         }
         Insert: {
+          clicks?: number
           created_at?: string
           description?: string
           end_date?: string | null
           id?: string
           image_url?: string | null
+          impressions?: number
           is_active?: boolean
+          menu_item_id?: string | null
+          original_price?: number | null
+          placement?: string
+          promo_price?: number | null
           start_date?: string | null
           title: string
           updated_at?: string
         }
         Update: {
+          clicks?: number
           created_at?: string
           description?: string
           end_date?: string | null
           id?: string
           image_url?: string | null
+          impressions?: number
           is_active?: boolean
+          menu_item_id?: string | null
+          original_price?: number | null
+          placement?: string
+          promo_price?: number | null
           start_date?: string | null
           title?: string
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "promos_menu_item_id_fkey"
+            columns: ["menu_item_id"]
+            isOneToOne: false
+            referencedRelation: "menu_items"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       site_settings: {
         Row: {
