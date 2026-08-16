@@ -19,6 +19,7 @@ import { Route as PromoRouteImport } from './routes/promo'
 import { Route as TentangRouteImport } from './routes/tentang'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminInboxRouteImport } from './routes/admin.inbox'
+import { Route as AdminMenuRouteImport } from './routes/admin.menu'
 import { Route as AdminPesananRouteImport } from './routes/admin.pesanan'
 import { Route as MenuIndexRouteImport } from './routes/menu.index'
 import { Route as MenuSlugRouteImport } from './routes/menu.$slug'
@@ -73,6 +74,11 @@ const AdminInboxRoute = AdminInboxRouteImport.update({
   path: '/inbox',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminMenuRoute = AdminMenuRouteImport.update({
+  id: '/menu',
+  path: '/menu',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminPesananRoute = AdminPesananRouteImport.update({
   id: '/pesanan',
   path: '/pesanan',
@@ -99,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/promo': typeof PromoRoute
   '/tentang': typeof TentangRoute
   '/admin/inbox': typeof AdminInboxRoute
+  '/admin/menu': typeof AdminMenuRoute
   '/admin/pesanan': typeof AdminPesananRoute
   '/menu/$slug': typeof MenuSlugRoute
   '/admin/': typeof AdminIndexRoute
@@ -112,6 +119,7 @@ export interface FileRoutesByTo {
   '/promo': typeof PromoRoute
   '/tentang': typeof TentangRoute
   '/admin/inbox': typeof AdminInboxRoute
+  '/admin/menu': typeof AdminMenuRoute
   '/admin/pesanan': typeof AdminPesananRoute
   '/menu/$slug': typeof MenuSlugRoute
   '/admin': typeof AdminIndexRoute
@@ -128,6 +136,7 @@ export interface FileRoutesById {
   '/promo': typeof PromoRoute
   '/tentang': typeof TentangRoute
   '/admin/inbox': typeof AdminInboxRoute
+  '/admin/menu': typeof AdminMenuRoute
   '/admin/pesanan': typeof AdminPesananRoute
   '/menu/$slug': typeof MenuSlugRoute
   '/admin/': typeof AdminIndexRoute
@@ -145,6 +154,7 @@ export interface FileRouteTypes {
     | '/promo'
     | '/tentang'
     | '/admin/inbox'
+    | '/admin/menu'
     | '/admin/pesanan'
     | '/menu/$slug'
     | '/admin/'
@@ -158,6 +168,7 @@ export interface FileRouteTypes {
     | '/promo'
     | '/tentang'
     | '/admin/inbox'
+    | '/admin/menu'
     | '/admin/pesanan'
     | '/menu/$slug'
     | '/admin'
@@ -173,6 +184,7 @@ export interface FileRouteTypes {
     | '/promo'
     | '/tentang'
     | '/admin/inbox'
+    | '/admin/menu'
     | '/admin/pesanan'
     | '/menu/$slug'
     | '/admin/'
@@ -262,6 +274,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminInboxRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/menu': {
+      id: '/admin/menu'
+      path: '/menu'
+      fullPath: '/admin/menu'
+      preLoaderRoute: typeof AdminMenuRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/pesanan': {
       id: '/admin/pesanan'
       path: '/pesanan'
@@ -288,12 +307,14 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteChildren {
   AdminInboxRoute: typeof AdminInboxRoute
+  AdminMenuRoute: typeof AdminMenuRoute
   AdminPesananRoute: typeof AdminPesananRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminInboxRoute: AdminInboxRoute,
+  AdminMenuRoute: AdminMenuRoute,
   AdminPesananRoute: AdminPesananRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
