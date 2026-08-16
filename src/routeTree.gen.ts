@@ -18,6 +18,7 @@ import { Route as MenuRouteImport } from './routes/menu'
 import { Route as PromoRouteImport } from './routes/promo'
 import { Route as TentangRouteImport } from './routes/tentang'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminAnalitikRouteImport } from './routes/admin.analitik'
 import { Route as AdminInboxRouteImport } from './routes/admin.inbox'
 import { Route as AdminMenuRouteImport } from './routes/admin.menu'
 import { Route as AdminPesananRouteImport } from './routes/admin.pesanan'
@@ -70,6 +71,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminAnalitikRoute = AdminAnalitikRouteImport.update({
+  id: '/analitik',
+  path: '/analitik',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminInboxRoute = AdminInboxRouteImport.update({
   id: '/inbox',
   path: '/inbox',
@@ -110,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/menu': typeof MenuRouteWithChildren
   '/promo': typeof PromoRoute
   '/tentang': typeof TentangRoute
+  '/admin/analitik': typeof AdminAnalitikRoute
   '/admin/inbox': typeof AdminInboxRoute
   '/admin/menu': typeof AdminMenuRoute
   '/admin/pesanan': typeof AdminPesananRoute
@@ -125,6 +132,7 @@ export interface FileRoutesByTo {
   '/lokasi': typeof LokasiRoute
   '/promo': typeof PromoRoute
   '/tentang': typeof TentangRoute
+  '/admin/analitik': typeof AdminAnalitikRoute
   '/admin/inbox': typeof AdminInboxRoute
   '/admin/menu': typeof AdminMenuRoute
   '/admin/pesanan': typeof AdminPesananRoute
@@ -143,6 +151,7 @@ export interface FileRoutesById {
   '/menu': typeof MenuRouteWithChildren
   '/promo': typeof PromoRoute
   '/tentang': typeof TentangRoute
+  '/admin/analitik': typeof AdminAnalitikRoute
   '/admin/inbox': typeof AdminInboxRoute
   '/admin/menu': typeof AdminMenuRoute
   '/admin/pesanan': typeof AdminPesananRoute
@@ -162,6 +171,7 @@ export interface FileRouteTypes {
     | '/menu'
     | '/promo'
     | '/tentang'
+    | '/admin/analitik'
     | '/admin/inbox'
     | '/admin/menu'
     | '/admin/pesanan'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/lokasi'
     | '/promo'
     | '/tentang'
+    | '/admin/analitik'
     | '/admin/inbox'
     | '/admin/menu'
     | '/admin/pesanan'
@@ -194,6 +205,7 @@ export interface FileRouteTypes {
     | '/menu'
     | '/promo'
     | '/tentang'
+    | '/admin/analitik'
     | '/admin/inbox'
     | '/admin/menu'
     | '/admin/pesanan'
@@ -279,6 +291,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/analitik': {
+      id: '/admin/analitik'
+      path: '/analitik'
+      fullPath: '/admin/analitik'
+      preLoaderRoute: typeof AdminAnalitikRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/inbox': {
       id: '/admin/inbox'
       path: '/inbox'
@@ -325,6 +344,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminAnalitikRoute: typeof AdminAnalitikRoute
   AdminInboxRoute: typeof AdminInboxRoute
   AdminMenuRoute: typeof AdminMenuRoute
   AdminPesananRoute: typeof AdminPesananRoute
@@ -333,6 +353,7 @@ interface AdminRouteChildren {
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAnalitikRoute: AdminAnalitikRoute,
   AdminInboxRoute: AdminInboxRoute,
   AdminMenuRoute: AdminMenuRoute,
   AdminPesananRoute: AdminPesananRoute,
