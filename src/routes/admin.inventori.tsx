@@ -48,7 +48,10 @@ function Inventori() {
     const { error } = draft.id
       ? await supabase.from("ingredients").update(payload).eq("id", draft.id)
       : await supabase.from("ingredients").insert(payload);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     void logActivity(draft.id ? "ubah bahan" : "tambah bahan", "ingredients", payload.name);
     setDraft(null);
     qc.invalidateQueries({ queryKey: ["ingredients"] });
@@ -58,7 +61,10 @@ function Inventori() {
   async function doRestock() {
     if (!restock) return;
     const change = Number(qty);
-    if (!change) return toast.error("Isi jumlah restock.");
+    if (!change) {
+      toast.error("Isi jumlah restock.");
+      return;
+    }
     const { data: auth } = await supabase.auth.getUser();
     const { error } = await supabase.from("stock_movements").insert({
       ingredient_id: restock.id,
@@ -66,7 +72,10 @@ function Inventori() {
       reason: change > 0 ? "restock" : "penyesuaian",
       actor_email: auth.user?.email ?? null,
     });
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     void logActivity("restock", "ingredients", `${restock.name} ${change > 0 ? "+" : ""}${change}`);
     setRestock(null);
     setQty("");
