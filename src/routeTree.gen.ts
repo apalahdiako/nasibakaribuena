@@ -23,6 +23,7 @@ import { Route as AdminInboxRouteImport } from './routes/admin.inbox'
 import { Route as AdminInventoriRouteImport } from './routes/admin.inventori'
 import { Route as AdminInvoiceRouteImport } from './routes/admin.invoice'
 import { Route as AdminKasirRouteImport } from './routes/admin.kasir'
+import { Route as AdminKeuanganRouteImport } from './routes/admin.keuangan'
 import { Route as AdminMenuRouteImport } from './routes/admin.menu'
 import { Route as AdminPelangganRouteImport } from './routes/admin.pelanggan'
 import { Route as AdminPengaturanRouteImport } from './routes/admin.pengaturan'
@@ -101,6 +102,11 @@ const AdminKasirRoute = AdminKasirRouteImport.update({
   path: '/kasir',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminKeuanganRoute = AdminKeuanganRouteImport.update({
+  id: '/keuangan',
+  path: '/keuangan',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminMenuRoute = AdminMenuRouteImport.update({
   id: '/menu',
   path: '/menu',
@@ -151,6 +157,7 @@ export interface FileRoutesByFullPath {
   '/admin/inventori': typeof AdminInventoriRoute
   '/admin/invoice': typeof AdminInvoiceRoute
   '/admin/kasir': typeof AdminKasirRoute
+  '/admin/keuangan': typeof AdminKeuanganRoute
   '/admin/menu': typeof AdminMenuRoute
   '/admin/pelanggan': typeof AdminPelangganRoute
   '/admin/pengaturan': typeof AdminPengaturanRoute
@@ -172,6 +179,7 @@ export interface FileRoutesByTo {
   '/admin/inventori': typeof AdminInventoriRoute
   '/admin/invoice': typeof AdminInvoiceRoute
   '/admin/kasir': typeof AdminKasirRoute
+  '/admin/keuangan': typeof AdminKeuanganRoute
   '/admin/menu': typeof AdminMenuRoute
   '/admin/pelanggan': typeof AdminPelangganRoute
   '/admin/pengaturan': typeof AdminPengaturanRoute
@@ -196,6 +204,7 @@ export interface FileRoutesById {
   '/admin/inventori': typeof AdminInventoriRoute
   '/admin/invoice': typeof AdminInvoiceRoute
   '/admin/kasir': typeof AdminKasirRoute
+  '/admin/keuangan': typeof AdminKeuanganRoute
   '/admin/menu': typeof AdminMenuRoute
   '/admin/pelanggan': typeof AdminPelangganRoute
   '/admin/pengaturan': typeof AdminPengaturanRoute
@@ -221,6 +230,7 @@ export interface FileRouteTypes {
     | '/admin/inventori'
     | '/admin/invoice'
     | '/admin/kasir'
+    | '/admin/keuangan'
     | '/admin/menu'
     | '/admin/pelanggan'
     | '/admin/pengaturan'
@@ -242,6 +252,7 @@ export interface FileRouteTypes {
     | '/admin/inventori'
     | '/admin/invoice'
     | '/admin/kasir'
+    | '/admin/keuangan'
     | '/admin/menu'
     | '/admin/pelanggan'
     | '/admin/pengaturan'
@@ -265,6 +276,7 @@ export interface FileRouteTypes {
     | '/admin/inventori'
     | '/admin/invoice'
     | '/admin/kasir'
+    | '/admin/keuangan'
     | '/admin/menu'
     | '/admin/pelanggan'
     | '/admin/pengaturan'
@@ -386,6 +398,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminKasirRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/keuangan': {
+      id: '/admin/keuangan'
+      path: '/keuangan'
+      fullPath: '/admin/keuangan'
+      preLoaderRoute: typeof AdminKeuanganRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/menu': {
       id: '/admin/menu'
       path: '/menu'
@@ -444,6 +463,7 @@ interface AdminRouteChildren {
   AdminInventoriRoute: typeof AdminInventoriRoute
   AdminInvoiceRoute: typeof AdminInvoiceRoute
   AdminKasirRoute: typeof AdminKasirRoute
+  AdminKeuanganRoute: typeof AdminKeuanganRoute
   AdminMenuRoute: typeof AdminMenuRoute
   AdminPelangganRoute: typeof AdminPelangganRoute
   AdminPengaturanRoute: typeof AdminPengaturanRoute
@@ -458,6 +478,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminInventoriRoute: AdminInventoriRoute,
   AdminInvoiceRoute: AdminInvoiceRoute,
   AdminKasirRoute: AdminKasirRoute,
+  AdminKeuanganRoute: AdminKeuanganRoute,
   AdminMenuRoute: AdminMenuRoute,
   AdminPelangganRoute: AdminPelangganRoute,
   AdminPengaturanRoute: AdminPengaturanRoute,
