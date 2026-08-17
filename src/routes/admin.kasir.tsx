@@ -34,7 +34,7 @@ function Kasir() {
   const [busy, setBusy] = useState(false);
 
   const available = menu.filter(
-    (m) => m.is_available && (m.name + (m.category ?? "")).toLowerCase().includes(q.toLowerCase()),
+    (m) => m.status === "aktif" && (m.name + (m.category ?? "")).toLowerCase().includes(q.toLowerCase()),
   );
 
   const subtotal = lines.reduce((s, l) => s + l.price * l.qty, 0);
@@ -70,8 +70,14 @@ function Kasir() {
   }
 
   async function checkout() {
-    if (!lines.length) return toast.error("Keranjang masih kosong.");
-    if (method === "tunai" && (Number(paid) || 0) < total) return toast.error("Jumlah bayar kurang dari total.");
+    if (!lines.length) {
+      toast.error("Keranjang masih kosong.");
+      return;
+    }
+    if (method === "tunai" && (Number(paid) || 0) < total) {
+      toast.error("Jumlah bayar kurang dari total.");
+      return;
+    }
     setBusy(true);
     const { data: auth } = await supabase.auth.getUser();
     const { data: trx, error } = await supabase
@@ -91,7 +97,8 @@ function Kasir() {
       .single();
     if (error || !trx) {
       setBusy(false);
-      return toast.error(error?.message ?? "Gagal menyimpan transaksi.");
+      toast.error(error?.message ?? "Gagal menyimpan transaksi.");
+      return;
     }
 
     await supabase.from("transaction_items").insert(
