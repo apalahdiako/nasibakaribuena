@@ -44,6 +44,30 @@ export type Database = {
         }
         Relationships: []
       }
+      chart_of_accounts: {
+        Row: {
+          code: string
+          created_at: string
+          id: string
+          name: string
+          type: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: string
+          name: string
+          type?: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: string
+          name?: string
+          type?: string
+        }
+        Relationships: []
+      }
       chat_messages: {
         Row: {
           content: string
@@ -106,6 +130,296 @@ export type Database = {
         }
         Relationships: []
       }
+      customers: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          name: string
+          notes: string | null
+          order_count: number
+          phone: string | null
+          points: number
+          tier: string
+          total_spent: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          order_count?: number
+          phone?: string | null
+          points?: number
+          tier?: string
+          total_spent?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          order_count?: number
+          phone?: string | null
+          points?: number
+          tier?: string
+          total_spent?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      ingredients: {
+        Row: {
+          cost_per_unit: number
+          created_at: string
+          id: string
+          min_stock: number
+          name: string
+          stock: number
+          supplier: string | null
+          unit: string
+          updated_at: string
+        }
+        Insert: {
+          cost_per_unit?: number
+          created_at?: string
+          id?: string
+          min_stock?: number
+          name: string
+          stock?: number
+          supplier?: string | null
+          unit?: string
+          updated_at?: string
+        }
+        Update: {
+          cost_per_unit?: number
+          created_at?: string
+          id?: string
+          min_stock?: number
+          name?: string
+          stock?: number
+          supplier?: string | null
+          unit?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      invoice_items: {
+        Row: {
+          cost: number
+          created_at: string
+          id: string
+          invoice_id: string
+          menu_item_id: string | null
+          name: string
+          price: number
+          qty: number
+        }
+        Insert: {
+          cost?: number
+          created_at?: string
+          id?: string
+          invoice_id: string
+          menu_item_id?: string | null
+          name: string
+          price?: number
+          qty?: number
+        }
+        Update: {
+          cost?: number
+          created_at?: string
+          id?: string
+          invoice_id?: string
+          menu_item_id?: string | null
+          name?: string
+          price?: number
+          qty?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoice_items_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "invoices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "invoice_items_menu_item_id_fkey"
+            columns: ["menu_item_id"]
+            isOneToOne: false
+            referencedRelation: "menu_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      invoices: {
+        Row: {
+          created_at: string
+          customer_address: string | null
+          customer_name: string
+          customer_phone: string | null
+          discount: number
+          due_date: string | null
+          id: string
+          invoice_no: string
+          issue_date: string
+          note: string | null
+          status: string
+          subtotal: number
+          tax_percent: number
+          total: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          customer_address?: string | null
+          customer_name: string
+          customer_phone?: string | null
+          discount?: number
+          due_date?: string | null
+          id?: string
+          invoice_no?: string
+          issue_date?: string
+          note?: string | null
+          status?: string
+          subtotal?: number
+          tax_percent?: number
+          total?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          customer_address?: string | null
+          customer_name?: string
+          customer_phone?: string | null
+          discount?: number
+          due_date?: string | null
+          id?: string
+          invoice_no?: string
+          issue_date?: string
+          note?: string | null
+          status?: string
+          subtotal?: number
+          tax_percent?: number
+          total?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      journal_entries: {
+        Row: {
+          account_code: string
+          actor_email: string | null
+          created_at: string
+          credit: number
+          debit: number
+          description: string
+          entry_date: string
+          id: string
+          ref_id: string | null
+          ref_type: string | null
+        }
+        Insert: {
+          account_code: string
+          actor_email?: string | null
+          created_at?: string
+          credit?: number
+          debit?: number
+          description: string
+          entry_date?: string
+          id?: string
+          ref_id?: string | null
+          ref_type?: string | null
+        }
+        Update: {
+          account_code?: string
+          actor_email?: string | null
+          created_at?: string
+          credit?: number
+          debit?: number
+          description?: string
+          entry_date?: string
+          id?: string
+          ref_id?: string | null
+          ref_type?: string | null
+        }
+        Relationships: []
+      }
+      kasbon: {
+        Row: {
+          amount: number
+          created_at: string
+          due_date: string | null
+          id: string
+          name: string
+          note: string | null
+          paid_amount: number
+          phone: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          due_date?: string | null
+          id?: string
+          name: string
+          note?: string | null
+          paid_amount?: number
+          phone?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          due_date?: string | null
+          id?: string
+          name?: string
+          note?: string | null
+          paid_amount?: number
+          phone?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      kasbon_payments: {
+        Row: {
+          actor_email: string | null
+          amount: number
+          id: string
+          kasbon_id: string
+          paid_at: string
+        }
+        Insert: {
+          actor_email?: string | null
+          amount?: number
+          id?: string
+          kasbon_id: string
+          paid_at?: string
+        }
+        Update: {
+          actor_email?: string | null
+          amount?: number
+          id?: string
+          kasbon_id?: string
+          paid_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "kasbon_payments_kasbon_id_fkey"
+            columns: ["kasbon_id"]
+            isOneToOne: false
+            referencedRelation: "kasbon"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       menu_items: {
         Row: {
           badge: string | null
@@ -154,6 +468,39 @@ export type Database = {
           sort_order?: number
           status?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          is_read: boolean
+          ref_id: string | null
+          ref_type: string | null
+          title: string
+          type: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          ref_id?: string | null
+          ref_type?: string | null
+          title: string
+          type?: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          ref_id?: string | null
+          ref_type?: string | null
+          title?: string
+          type?: string
         }
         Relationships: []
       }
@@ -330,6 +677,95 @@ export type Database = {
           },
         ]
       }
+      recipes: {
+        Row: {
+          created_at: string
+          id: string
+          ingredient_id: string
+          menu_item_id: string
+          qty: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ingredient_id: string
+          menu_item_id: string
+          qty?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ingredient_id?: string
+          menu_item_id?: string
+          qty?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recipes_ingredient_id_fkey"
+            columns: ["ingredient_id"]
+            isOneToOne: false
+            referencedRelation: "ingredients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "recipes_menu_item_id_fkey"
+            columns: ["menu_item_id"]
+            isOneToOne: false
+            referencedRelation: "menu_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reviews: {
+        Row: {
+          admin_reply: string | null
+          comment: string | null
+          created_at: string
+          customer_name: string
+          id: string
+          is_complaint: boolean
+          is_published: boolean
+          menu_item_id: string | null
+          phone: string | null
+          rating: number
+          status: string
+        }
+        Insert: {
+          admin_reply?: string | null
+          comment?: string | null
+          created_at?: string
+          customer_name?: string
+          id?: string
+          is_complaint?: boolean
+          is_published?: boolean
+          menu_item_id?: string | null
+          phone?: string | null
+          rating?: number
+          status?: string
+        }
+        Update: {
+          admin_reply?: string | null
+          comment?: string | null
+          created_at?: string
+          customer_name?: string
+          id?: string
+          is_complaint?: boolean
+          is_published?: boolean
+          menu_item_id?: string | null
+          phone?: string | null
+          rating?: number
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_menu_item_id_fkey"
+            columns: ["menu_item_id"]
+            isOneToOne: false
+            referencedRelation: "menu_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       site_settings: {
         Row: {
           about_text: string
@@ -387,6 +823,154 @@ export type Database = {
         }
         Relationships: []
       }
+      stock_movements: {
+        Row: {
+          actor_email: string | null
+          change: number
+          created_at: string
+          id: string
+          ingredient_id: string
+          note: string | null
+          reason: string
+        }
+        Insert: {
+          actor_email?: string | null
+          change: number
+          created_at?: string
+          id?: string
+          ingredient_id: string
+          note?: string | null
+          reason?: string
+        }
+        Update: {
+          actor_email?: string | null
+          change?: number
+          created_at?: string
+          id?: string
+          ingredient_id?: string
+          note?: string | null
+          reason?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stock_movements_ingredient_id_fkey"
+            columns: ["ingredient_id"]
+            isOneToOne: false
+            referencedRelation: "ingredients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      transaction_items: {
+        Row: {
+          created_at: string
+          id: string
+          menu_item_id: string | null
+          name: string
+          price: number
+          qty: number
+          transaction_id: string
+          variant: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          menu_item_id?: string | null
+          name: string
+          price?: number
+          qty?: number
+          transaction_id: string
+          variant?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          menu_item_id?: string | null
+          name?: string
+          price?: number
+          qty?: number
+          transaction_id?: string
+          variant?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transaction_items_menu_item_id_fkey"
+            columns: ["menu_item_id"]
+            isOneToOne: false
+            referencedRelation: "menu_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transaction_items_transaction_id_fkey"
+            columns: ["transaction_id"]
+            isOneToOne: false
+            referencedRelation: "transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      transactions: {
+        Row: {
+          cashier_email: string | null
+          change_due: number
+          channel: string
+          created_at: string
+          customer_id: string | null
+          customer_name: string | null
+          customer_phone: string | null
+          discount: number
+          id: string
+          note: string | null
+          paid: number
+          payment_method: string
+          subtotal: number
+          total: number
+          trx_no: string
+        }
+        Insert: {
+          cashier_email?: string | null
+          change_due?: number
+          channel?: string
+          created_at?: string
+          customer_id?: string | null
+          customer_name?: string | null
+          customer_phone?: string | null
+          discount?: number
+          id?: string
+          note?: string | null
+          paid?: number
+          payment_method?: string
+          subtotal?: number
+          total?: number
+          trx_no?: string
+        }
+        Update: {
+          cashier_email?: string | null
+          change_due?: number
+          channel?: string
+          created_at?: string
+          customer_id?: string | null
+          customer_name?: string | null
+          customer_phone?: string | null
+          discount?: number
+          id?: string
+          note?: string | null
+          paid?: number
+          payment_method?: string
+          subtotal?: number
+          total?: number
+          trx_no?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -408,6 +992,48 @@ export type Database = {
         }
         Relationships: []
       }
+      vouchers: {
+        Row: {
+          code: string
+          created_at: string
+          discount_type: string
+          discount_value: number
+          ends_at: string | null
+          id: string
+          is_active: boolean
+          min_spend: number
+          quota: number
+          starts_at: string | null
+          used_count: number
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          discount_type?: string
+          discount_value?: number
+          ends_at?: string | null
+          id?: string
+          is_active?: boolean
+          min_spend?: number
+          quota?: number
+          starts_at?: string | null
+          used_count?: number
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          discount_type?: string
+          discount_value?: number
+          ends_at?: string | null
+          id?: string
+          is_active?: boolean
+          min_spend?: number
+          quota?: number
+          starts_at?: string | null
+          used_count?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -423,7 +1049,7 @@ export type Database = {
       is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      app_role: "superadmin" | "admin"
+      app_role: "superadmin" | "admin" | "kasir" | "dapur" | "akuntan"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -551,7 +1177,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["superadmin", "admin"],
+      app_role: ["superadmin", "admin", "kasir", "dapur", "akuntan"],
     },
   },
 } as const
