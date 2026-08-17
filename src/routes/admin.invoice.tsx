@@ -43,9 +43,10 @@ function InvoicePage() {
     const { data, error } = await supabase
       .from("invoices")
       .insert({
-        client_name: client,
-        client_phone: phone || null,
+        customer_name: client,
+        customer_phone: phone || null,
         due_date: due || null,
+        subtotal: total,
         total,
         status: "draft",
       })
@@ -71,7 +72,7 @@ function InvoicePage() {
   async function setStatus(inv: Invoice, status: string) {
     await supabase
       .from("invoices")
-      .update({ status, paid_at: status === "lunas" ? new Date().toISOString() : null })
+      .update({ status })
       .eq("id", inv.id);
     void logActivity("ubah status invoice", "invoices", `${inv.invoice_no} → ${status}`);
     qc.invalidateQueries({ queryKey: ["invoices"] });
@@ -85,15 +86,15 @@ function InvoicePage() {
   function sendWa(inv: Invoice) {
     const items = allItems.filter((it) => it.invoice_id === inv.id);
     const rows = items.map((it) => `• ${it.name} x${it.qty} — ${rupiah(Number(it.price) * it.qty)}`).join("\n");
-    const text = `*INVOICE ${inv.invoice_no}*\nNasi Bakar Ibu Ena\n\nKepada: ${inv.client_name}\nJatuh tempo: ${inv.due_date ? tanggal(inv.due_date) : "-"}\n\n${rows}\n\n*TOTAL: ${rupiah(Number(inv.total))}*\n\nMohon konfirmasi pembayaran. Terima kasih 🙏`;
-    if (inv.client_phone) window.open(waLink(inv.client_phone, text), "_blank");
+    const text = `*INVOICE ${inv.invoice_no}*\nNasi Bakar Ibu Ena\n\nKepada: ${inv.customer_name}\nJatuh tempo: ${inv.due_date ? tanggal(inv.due_date) : "-"}\n\n${rows}\n\n*TOTAL: ${rupiah(Number(inv.total))}*\n\nMohon konfirmasi pembayaran. Terima kasih 🙏`;
+    if (inv.customer_phone) window.open(waLink(inv.customer_phone, text), "_blank");
     else toast.error("Nomor klien belum diisi.");
   }
 
   function exportCsv() {
     const rows = [
       ["No Invoice", "Klien", "Tanggal", "Jatuh Tempo", "Total", "Status"],
-      ...invoices.map((i) => [i.invoice_no, i.client_name, tanggal(i.created_at), i.due_date ?? "", String(i.total), i.status]),
+      ...invoices.map((i) => [i.invoice_no, i.customer_name, tanggal(i.created_at), i.due_date ?? "", String(i.total), i.status]),
     ];
     const csv = rows.map((r) => r.map((c) => `"${c}"`).join(",")).join("\n");
     const url = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
@@ -154,7 +155,7 @@ function InvoicePage() {
             {shown.map((i) => (
               <tr key={i.id} className="border-b border-border/60 last:border-0">
                 <td className="px-4 py-3 font-mono text-xs">{i.invoice_no}</td>
-                <td className="px-4 py-3 font-medium">{i.client_name}</td>
+                <td className="px-4 py-3 font-medium">{i.customer_name}</td>
                 <td className="px-4 py-3 text-muted-foreground">{i.due_date ? tanggal(i.due_date) : "—"}</td>
                 <td className="px-4 py-3 font-semibold">{rupiah(Number(i.total))}</td>
                 <td className="px-4 py-3">
