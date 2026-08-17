@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
-type TableName = "orders_log" | "chat_messages" | "chat_sessions" | "menu_items" | "promos" | "outlets" | "site_settings";
+type TableName =
+  | "orders_log" | "chat_messages" | "chat_sessions" | "menu_items" | "promos" | "outlets" | "site_settings"
+  | "ingredients" | "transactions" | "invoices" | "kasbon" | "reviews" | "notifications" | "customers";
 
 type Options = {
   /** Tabel yang di-subscribe -> queryKey yang di-invalidate */
