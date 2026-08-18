@@ -205,6 +205,8 @@ function AdminLayout() {
               </button>
               <LiveBadge />
             </div>
+            <div className="flex items-center gap-3">
+            <NotificationBell />
             <div className="text-right text-xs text-muted-foreground">
               <p className="font-semibold text-foreground">{user.email}</p>
               <p className="capitalize">{role}</p>
