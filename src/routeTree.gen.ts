@@ -22,13 +22,17 @@ import { Route as AdminAnalitikRouteImport } from './routes/admin.analitik'
 import { Route as AdminInboxRouteImport } from './routes/admin.inbox'
 import { Route as AdminInventoriRouteImport } from './routes/admin.inventori'
 import { Route as AdminInvoiceRouteImport } from './routes/admin.invoice'
+import { Route as AdminKasbonRouteImport } from './routes/admin.kasbon'
 import { Route as AdminKasirRouteImport } from './routes/admin.kasir'
 import { Route as AdminKeuanganRouteImport } from './routes/admin.keuangan'
 import { Route as AdminMenuRouteImport } from './routes/admin.menu'
+import { Route as AdminNotifikasiRouteImport } from './routes/admin.notifikasi'
 import { Route as AdminPelangganRouteImport } from './routes/admin.pelanggan'
 import { Route as AdminPengaturanRouteImport } from './routes/admin.pengaturan'
 import { Route as AdminPesananRouteImport } from './routes/admin.pesanan'
 import { Route as AdminPromoRouteImport } from './routes/admin.promo'
+import { Route as AdminReviewRouteImport } from './routes/admin.review'
+import { Route as AdminVoucherRouteImport } from './routes/admin.voucher'
 import { Route as MenuIndexRouteImport } from './routes/menu.index'
 import { Route as MenuSlugRouteImport } from './routes/menu.$slug'
 
@@ -97,6 +101,11 @@ const AdminInvoiceRoute = AdminInvoiceRouteImport.update({
   path: '/invoice',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminKasbonRoute = AdminKasbonRouteImport.update({
+  id: '/kasbon',
+  path: '/kasbon',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminKasirRoute = AdminKasirRouteImport.update({
   id: '/kasir',
   path: '/kasir',
@@ -110,6 +119,11 @@ const AdminKeuanganRoute = AdminKeuanganRouteImport.update({
 const AdminMenuRoute = AdminMenuRouteImport.update({
   id: '/menu',
   path: '/menu',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminNotifikasiRoute = AdminNotifikasiRouteImport.update({
+  id: '/notifikasi',
+  path: '/notifikasi',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminPelangganRoute = AdminPelangganRouteImport.update({
@@ -130,6 +144,16 @@ const AdminPesananRoute = AdminPesananRouteImport.update({
 const AdminPromoRoute = AdminPromoRouteImport.update({
   id: '/promo',
   path: '/promo',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminReviewRoute = AdminReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminVoucherRoute = AdminVoucherRouteImport.update({
+  id: '/voucher',
+  path: '/voucher',
   getParentRoute: () => AdminRoute,
 } as any)
 const MenuIndexRoute = MenuIndexRouteImport.update({
@@ -156,13 +180,17 @@ export interface FileRoutesByFullPath {
   '/admin/inbox': typeof AdminInboxRoute
   '/admin/inventori': typeof AdminInventoriRoute
   '/admin/invoice': typeof AdminInvoiceRoute
+  '/admin/kasbon': typeof AdminKasbonRoute
   '/admin/kasir': typeof AdminKasirRoute
   '/admin/keuangan': typeof AdminKeuanganRoute
   '/admin/menu': typeof AdminMenuRoute
+  '/admin/notifikasi': typeof AdminNotifikasiRoute
   '/admin/pelanggan': typeof AdminPelangganRoute
   '/admin/pengaturan': typeof AdminPengaturanRoute
   '/admin/pesanan': typeof AdminPesananRoute
   '/admin/promo': typeof AdminPromoRoute
+  '/admin/review': typeof AdminReviewRoute
+  '/admin/voucher': typeof AdminVoucherRoute
   '/menu/$slug': typeof MenuSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/menu/': typeof MenuIndexRoute
@@ -178,13 +206,17 @@ export interface FileRoutesByTo {
   '/admin/inbox': typeof AdminInboxRoute
   '/admin/inventori': typeof AdminInventoriRoute
   '/admin/invoice': typeof AdminInvoiceRoute
+  '/admin/kasbon': typeof AdminKasbonRoute
   '/admin/kasir': typeof AdminKasirRoute
   '/admin/keuangan': typeof AdminKeuanganRoute
   '/admin/menu': typeof AdminMenuRoute
+  '/admin/notifikasi': typeof AdminNotifikasiRoute
   '/admin/pelanggan': typeof AdminPelangganRoute
   '/admin/pengaturan': typeof AdminPengaturanRoute
   '/admin/pesanan': typeof AdminPesananRoute
   '/admin/promo': typeof AdminPromoRoute
+  '/admin/review': typeof AdminReviewRoute
+  '/admin/voucher': typeof AdminVoucherRoute
   '/menu/$slug': typeof MenuSlugRoute
   '/admin': typeof AdminIndexRoute
   '/menu': typeof MenuIndexRoute
@@ -203,13 +235,17 @@ export interface FileRoutesById {
   '/admin/inbox': typeof AdminInboxRoute
   '/admin/inventori': typeof AdminInventoriRoute
   '/admin/invoice': typeof AdminInvoiceRoute
+  '/admin/kasbon': typeof AdminKasbonRoute
   '/admin/kasir': typeof AdminKasirRoute
   '/admin/keuangan': typeof AdminKeuanganRoute
   '/admin/menu': typeof AdminMenuRoute
+  '/admin/notifikasi': typeof AdminNotifikasiRoute
   '/admin/pelanggan': typeof AdminPelangganRoute
   '/admin/pengaturan': typeof AdminPengaturanRoute
   '/admin/pesanan': typeof AdminPesananRoute
   '/admin/promo': typeof AdminPromoRoute
+  '/admin/review': typeof AdminReviewRoute
+  '/admin/voucher': typeof AdminVoucherRoute
   '/menu/$slug': typeof MenuSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/menu/': typeof MenuIndexRoute
@@ -229,13 +265,17 @@ export interface FileRouteTypes {
     | '/admin/inbox'
     | '/admin/inventori'
     | '/admin/invoice'
+    | '/admin/kasbon'
     | '/admin/kasir'
     | '/admin/keuangan'
     | '/admin/menu'
+    | '/admin/notifikasi'
     | '/admin/pelanggan'
     | '/admin/pengaturan'
     | '/admin/pesanan'
     | '/admin/promo'
+    | '/admin/review'
+    | '/admin/voucher'
     | '/menu/$slug'
     | '/admin/'
     | '/menu/'
@@ -251,13 +291,17 @@ export interface FileRouteTypes {
     | '/admin/inbox'
     | '/admin/inventori'
     | '/admin/invoice'
+    | '/admin/kasbon'
     | '/admin/kasir'
     | '/admin/keuangan'
     | '/admin/menu'
+    | '/admin/notifikasi'
     | '/admin/pelanggan'
     | '/admin/pengaturan'
     | '/admin/pesanan'
     | '/admin/promo'
+    | '/admin/review'
+    | '/admin/voucher'
     | '/menu/$slug'
     | '/admin'
     | '/menu'
@@ -275,13 +319,17 @@ export interface FileRouteTypes {
     | '/admin/inbox'
     | '/admin/inventori'
     | '/admin/invoice'
+    | '/admin/kasbon'
     | '/admin/kasir'
     | '/admin/keuangan'
     | '/admin/menu'
+    | '/admin/notifikasi'
     | '/admin/pelanggan'
     | '/admin/pengaturan'
     | '/admin/pesanan'
     | '/admin/promo'
+    | '/admin/review'
+    | '/admin/voucher'
     | '/menu/$slug'
     | '/admin/'
     | '/menu/'
@@ -391,6 +439,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminInvoiceRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/kasbon': {
+      id: '/admin/kasbon'
+      path: '/kasbon'
+      fullPath: '/admin/kasbon'
+      preLoaderRoute: typeof AdminKasbonRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/kasir': {
       id: '/admin/kasir'
       path: '/kasir'
@@ -410,6 +465,13 @@ declare module '@tanstack/react-router' {
       path: '/menu'
       fullPath: '/admin/menu'
       preLoaderRoute: typeof AdminMenuRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/notifikasi': {
+      id: '/admin/notifikasi'
+      path: '/notifikasi'
+      fullPath: '/admin/notifikasi'
+      preLoaderRoute: typeof AdminNotifikasiRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/pelanggan': {
@@ -440,6 +502,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPromoRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/review': {
+      id: '/admin/review'
+      path: '/review'
+      fullPath: '/admin/review'
+      preLoaderRoute: typeof AdminReviewRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/voucher': {
+      id: '/admin/voucher'
+      path: '/voucher'
+      fullPath: '/admin/voucher'
+      preLoaderRoute: typeof AdminVoucherRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/menu/': {
       id: '/menu/'
       path: '/'
@@ -462,13 +538,17 @@ interface AdminRouteChildren {
   AdminInboxRoute: typeof AdminInboxRoute
   AdminInventoriRoute: typeof AdminInventoriRoute
   AdminInvoiceRoute: typeof AdminInvoiceRoute
+  AdminKasbonRoute: typeof AdminKasbonRoute
   AdminKasirRoute: typeof AdminKasirRoute
   AdminKeuanganRoute: typeof AdminKeuanganRoute
   AdminMenuRoute: typeof AdminMenuRoute
+  AdminNotifikasiRoute: typeof AdminNotifikasiRoute
   AdminPelangganRoute: typeof AdminPelangganRoute
   AdminPengaturanRoute: typeof AdminPengaturanRoute
   AdminPesananRoute: typeof AdminPesananRoute
   AdminPromoRoute: typeof AdminPromoRoute
+  AdminReviewRoute: typeof AdminReviewRoute
+  AdminVoucherRoute: typeof AdminVoucherRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
@@ -477,13 +557,17 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminInboxRoute: AdminInboxRoute,
   AdminInventoriRoute: AdminInventoriRoute,
   AdminInvoiceRoute: AdminInvoiceRoute,
+  AdminKasbonRoute: AdminKasbonRoute,
   AdminKasirRoute: AdminKasirRoute,
   AdminKeuanganRoute: AdminKeuanganRoute,
   AdminMenuRoute: AdminMenuRoute,
+  AdminNotifikasiRoute: AdminNotifikasiRoute,
   AdminPelangganRoute: AdminPelangganRoute,
   AdminPengaturanRoute: AdminPengaturanRoute,
   AdminPesananRoute: AdminPesananRoute,
   AdminPromoRoute: AdminPromoRoute,
+  AdminReviewRoute: AdminReviewRoute,
+  AdminVoucherRoute: AdminVoucherRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 

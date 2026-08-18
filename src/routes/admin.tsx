@@ -14,10 +14,15 @@ import {
   X,
   LogOut,
   Radio,
+  Star,
+  Ticket,
+  Wallet,
+  Bell,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useRealtime } from "@/hooks/useRealtime";
+import { NotificationBell } from "@/components/admin/NotificationBell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -47,6 +52,10 @@ const NAV = [
   { to: "/admin/keuangan", label: "Keuangan", icon: BarChart3 },
   { to: "/admin/analitik", label: "Analitik", icon: BarChart3 },
   { to: "/admin/pelanggan", label: "Pelanggan", icon: Users },
+  { to: "/admin/voucher", label: "Voucher", icon: Ticket },
+  { to: "/admin/kasbon", label: "Kasbon", icon: Wallet },
+  { to: "/admin/review", label: "Review", icon: Star },
+  { to: "/admin/notifikasi", label: "Notifikasi", icon: Bell },
   { to: "/admin/pengaturan", label: "Pengaturan", icon: Settings },
 ] as const;
 
@@ -196,9 +205,12 @@ function AdminLayout() {
               </button>
               <LiveBadge />
             </div>
-            <div className="text-right text-xs text-muted-foreground">
-              <p className="font-semibold text-foreground">{user.email}</p>
-              <p className="capitalize">{role}</p>
+            <div className="flex items-center gap-3">
+              <NotificationBell />
+              <div className="text-right text-xs text-muted-foreground">
+                <p className="font-semibold text-foreground">{user.email}</p>
+                <p className="capitalize">{role}</p>
+              </div>
             </div>
           </div>
         </header>
