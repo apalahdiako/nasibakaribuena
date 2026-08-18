@@ -352,41 +352,64 @@ export type Database = {
       kasbon: {
         Row: {
           amount: number
+          approved_at: string | null
+          approved_by: string | null
           created_at: string
+          customer_id: string | null
           due_date: string | null
           id: string
           name: string
           note: string | null
           paid_amount: number
           phone: string | null
+          reject_reason: string | null
+          requested_by: string | null
           status: string
           updated_at: string
         }
         Insert: {
           amount?: number
+          approved_at?: string | null
+          approved_by?: string | null
           created_at?: string
+          customer_id?: string | null
           due_date?: string | null
           id?: string
           name: string
           note?: string | null
           paid_amount?: number
           phone?: string | null
+          reject_reason?: string | null
+          requested_by?: string | null
           status?: string
           updated_at?: string
         }
         Update: {
           amount?: number
+          approved_at?: string | null
+          approved_by?: string | null
           created_at?: string
+          customer_id?: string | null
           due_date?: string | null
           id?: string
           name?: string
           note?: string | null
           paid_amount?: number
           phone?: string | null
+          reject_reason?: string | null
+          requested_by?: string | null
           status?: string
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "kasbon_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       kasbon_payments: {
         Row: {
@@ -991,6 +1014,50 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      voucher_redemptions: {
+        Row: {
+          actor_email: string | null
+          code: string
+          created_at: string
+          customer_name: string | null
+          discount_amount: number
+          id: string
+          ref_id: string | null
+          ref_type: string
+          voucher_id: string
+        }
+        Insert: {
+          actor_email?: string | null
+          code: string
+          created_at?: string
+          customer_name?: string | null
+          discount_amount?: number
+          id?: string
+          ref_id?: string | null
+          ref_type?: string
+          voucher_id: string
+        }
+        Update: {
+          actor_email?: string | null
+          code?: string
+          created_at?: string
+          customer_name?: string | null
+          discount_amount?: number
+          id?: string
+          ref_id?: string | null
+          ref_type?: string
+          voucher_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "voucher_redemptions_voucher_id_fkey"
+            columns: ["voucher_id"]
+            isOneToOne: false
+            referencedRelation: "vouchers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       vouchers: {
         Row: {
