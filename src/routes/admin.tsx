@@ -52,6 +52,10 @@ const NAV = [
   { to: "/admin/keuangan", label: "Keuangan", icon: BarChart3 },
   { to: "/admin/analitik", label: "Analitik", icon: BarChart3 },
   { to: "/admin/pelanggan", label: "Pelanggan", icon: Users },
+  { to: "/admin/voucher", label: "Voucher", icon: Ticket },
+  { to: "/admin/kasbon", label: "Kasbon", icon: Wallet },
+  { to: "/admin/review", label: "Review", icon: Star },
+  { to: "/admin/notifikasi", label: "Notifikasi", icon: Bell },
   { to: "/admin/pengaturan", label: "Pengaturan", icon: Settings },
 ] as const;
 
