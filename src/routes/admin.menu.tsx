@@ -44,6 +44,7 @@ function MenuAdmin() {
   const { data: menu = [] } = useQuery(menuQuery);
   const [draft, setDraft] = useState<Draft | null>(null);
   const [busy, setBusy] = useState(false);
+  const [uploading, setUploading] = useState(false);
   useRealtime({ channelName: "menu-admin", tables: { menu_items: ["menu_items"] } });
 
   async function save() {
