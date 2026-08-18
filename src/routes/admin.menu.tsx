@@ -8,6 +8,7 @@ import { menuQuery, type MenuItem } from "@/lib/queries";
 import { useRealtime } from "@/hooks/useRealtime";
 import { logActivity } from "@/lib/activity";
 import { rupiah } from "@/lib/format";
+import { uploadMenuImage, MAX_IMAGE_MB } from "@/lib/upload";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
