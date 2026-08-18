@@ -30,6 +30,7 @@ import { Route as AdminPelangganRouteImport } from './routes/admin.pelanggan'
 import { Route as AdminPengaturanRouteImport } from './routes/admin.pengaturan'
 import { Route as AdminPesananRouteImport } from './routes/admin.pesanan'
 import { Route as AdminPromoRouteImport } from './routes/admin.promo'
+import { Route as AdminReviewRouteImport } from './routes/admin.review'
 import { Route as MenuIndexRouteImport } from './routes/menu.index'
 import { Route as MenuSlugRouteImport } from './routes/menu.$slug'
 
@@ -138,6 +139,11 @@ const AdminPromoRoute = AdminPromoRouteImport.update({
   path: '/promo',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminReviewRoute = AdminReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => AdminRoute,
+} as any)
 const MenuIndexRoute = MenuIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -170,6 +176,7 @@ export interface FileRoutesByFullPath {
   '/admin/pengaturan': typeof AdminPengaturanRoute
   '/admin/pesanan': typeof AdminPesananRoute
   '/admin/promo': typeof AdminPromoRoute
+  '/admin/review': typeof AdminReviewRoute
   '/menu/$slug': typeof MenuSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/menu/': typeof MenuIndexRoute
@@ -193,6 +200,7 @@ export interface FileRoutesByTo {
   '/admin/pengaturan': typeof AdminPengaturanRoute
   '/admin/pesanan': typeof AdminPesananRoute
   '/admin/promo': typeof AdminPromoRoute
+  '/admin/review': typeof AdminReviewRoute
   '/menu/$slug': typeof MenuSlugRoute
   '/admin': typeof AdminIndexRoute
   '/menu': typeof MenuIndexRoute
@@ -219,6 +227,7 @@ export interface FileRoutesById {
   '/admin/pengaturan': typeof AdminPengaturanRoute
   '/admin/pesanan': typeof AdminPesananRoute
   '/admin/promo': typeof AdminPromoRoute
+  '/admin/review': typeof AdminReviewRoute
   '/menu/$slug': typeof MenuSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/menu/': typeof MenuIndexRoute
@@ -246,6 +255,7 @@ export interface FileRouteTypes {
     | '/admin/pengaturan'
     | '/admin/pesanan'
     | '/admin/promo'
+    | '/admin/review'
     | '/menu/$slug'
     | '/admin/'
     | '/menu/'
@@ -269,6 +279,7 @@ export interface FileRouteTypes {
     | '/admin/pengaturan'
     | '/admin/pesanan'
     | '/admin/promo'
+    | '/admin/review'
     | '/menu/$slug'
     | '/admin'
     | '/menu'
@@ -294,6 +305,7 @@ export interface FileRouteTypes {
     | '/admin/pengaturan'
     | '/admin/pesanan'
     | '/admin/promo'
+    | '/admin/review'
     | '/menu/$slug'
     | '/admin/'
     | '/menu/'
@@ -459,6 +471,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPromoRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/review': {
+      id: '/admin/review'
+      path: '/review'
+      fullPath: '/admin/review'
+      preLoaderRoute: typeof AdminReviewRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/menu/': {
       id: '/menu/'
       path: '/'
@@ -489,6 +508,7 @@ interface AdminRouteChildren {
   AdminPengaturanRoute: typeof AdminPengaturanRoute
   AdminPesananRoute: typeof AdminPesananRoute
   AdminPromoRoute: typeof AdminPromoRoute
+  AdminReviewRoute: typeof AdminReviewRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
@@ -505,6 +525,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminPengaturanRoute: AdminPengaturanRoute,
   AdminPesananRoute: AdminPesananRoute,
   AdminPromoRoute: AdminPromoRoute,
+  AdminReviewRoute: AdminReviewRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
