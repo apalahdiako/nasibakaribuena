@@ -214,7 +214,6 @@ function AdminLayout() {
             </div>
           </div>
         </header>
-        </header>
         <main className="px-4 py-6 md:px-7 md:py-8">
           <Outlet />
         </main>
