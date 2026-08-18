@@ -31,6 +31,7 @@ import { Route as AdminPengaturanRouteImport } from './routes/admin.pengaturan'
 import { Route as AdminPesananRouteImport } from './routes/admin.pesanan'
 import { Route as AdminPromoRouteImport } from './routes/admin.promo'
 import { Route as AdminReviewRouteImport } from './routes/admin.review'
+import { Route as AdminVoucherRouteImport } from './routes/admin.voucher'
 import { Route as MenuIndexRouteImport } from './routes/menu.index'
 import { Route as MenuSlugRouteImport } from './routes/menu.$slug'
 
@@ -144,6 +145,11 @@ const AdminReviewRoute = AdminReviewRouteImport.update({
   path: '/review',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminVoucherRoute = AdminVoucherRouteImport.update({
+  id: '/voucher',
+  path: '/voucher',
+  getParentRoute: () => AdminRoute,
+} as any)
 const MenuIndexRoute = MenuIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -177,6 +183,7 @@ export interface FileRoutesByFullPath {
   '/admin/pesanan': typeof AdminPesananRoute
   '/admin/promo': typeof AdminPromoRoute
   '/admin/review': typeof AdminReviewRoute
+  '/admin/voucher': typeof AdminVoucherRoute
   '/menu/$slug': typeof MenuSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/menu/': typeof MenuIndexRoute
@@ -201,6 +208,7 @@ export interface FileRoutesByTo {
   '/admin/pesanan': typeof AdminPesananRoute
   '/admin/promo': typeof AdminPromoRoute
   '/admin/review': typeof AdminReviewRoute
+  '/admin/voucher': typeof AdminVoucherRoute
   '/menu/$slug': typeof MenuSlugRoute
   '/admin': typeof AdminIndexRoute
   '/menu': typeof MenuIndexRoute
@@ -228,6 +236,7 @@ export interface FileRoutesById {
   '/admin/pesanan': typeof AdminPesananRoute
   '/admin/promo': typeof AdminPromoRoute
   '/admin/review': typeof AdminReviewRoute
+  '/admin/voucher': typeof AdminVoucherRoute
   '/menu/$slug': typeof MenuSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/menu/': typeof MenuIndexRoute
@@ -256,6 +265,7 @@ export interface FileRouteTypes {
     | '/admin/pesanan'
     | '/admin/promo'
     | '/admin/review'
+    | '/admin/voucher'
     | '/menu/$slug'
     | '/admin/'
     | '/menu/'
@@ -280,6 +290,7 @@ export interface FileRouteTypes {
     | '/admin/pesanan'
     | '/admin/promo'
     | '/admin/review'
+    | '/admin/voucher'
     | '/menu/$slug'
     | '/admin'
     | '/menu'
@@ -306,6 +317,7 @@ export interface FileRouteTypes {
     | '/admin/pesanan'
     | '/admin/promo'
     | '/admin/review'
+    | '/admin/voucher'
     | '/menu/$slug'
     | '/admin/'
     | '/menu/'
@@ -478,6 +490,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminReviewRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/voucher': {
+      id: '/admin/voucher'
+      path: '/voucher'
+      fullPath: '/admin/voucher'
+      preLoaderRoute: typeof AdminVoucherRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/menu/': {
       id: '/menu/'
       path: '/'
@@ -509,6 +528,7 @@ interface AdminRouteChildren {
   AdminPesananRoute: typeof AdminPesananRoute
   AdminPromoRoute: typeof AdminPromoRoute
   AdminReviewRoute: typeof AdminReviewRoute
+  AdminVoucherRoute: typeof AdminVoucherRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
@@ -526,6 +546,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminPesananRoute: AdminPesananRoute,
   AdminPromoRoute: AdminPromoRoute,
   AdminReviewRoute: AdminReviewRoute,
+  AdminVoucherRoute: AdminVoucherRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
