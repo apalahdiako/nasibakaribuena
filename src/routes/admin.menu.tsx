@@ -176,8 +176,46 @@ function MenuAdmin() {
                 <Textarea rows={3} value={draft.description ?? ""} onChange={(e) => setDraft({ ...draft, description: e.target.value })} />
               </div>
               <div className="grid gap-1.5">
-                <Label>URL gambar</Label>
-                <Input value={draft.image_url ?? ""} onChange={(e) => setDraft({ ...draft, image_url: e.target.value })} />
+                <Label>Gambar menu</Label>
+                {draft.image_url ? (
+                  <div className="relative overflow-hidden rounded-xl border border-border">
+                    <img src={draft.image_url} alt="Pratinjau" className="h-40 w-full object-cover" />
+                    <button
+                      type="button"
+                      onClick={() => setDraft({ ...draft, image_url: "" })}
+                      className="absolute right-2 top-2 rounded-full bg-background/90 p-1.5"
+                      aria-label="Hapus gambar"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <label className="grid cursor-pointer place-items-center gap-1 rounded-xl border border-dashed border-border py-8 text-sm text-muted-foreground hover:bg-accent">
+                    <Upload className="h-5 w-5" />
+                    {uploading ? "Mengunggah…" : `Pilih gambar (maks ${MAX_IMAGE_MB}MB)`}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      disabled={uploading}
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        e.target.value = "";
+                        if (!file) return;
+                        setUploading(true);
+                        try {
+                          const url = await uploadMenuImage(file);
+                          setDraft((d) => ({ ...(d ?? {}), image_url: url }));
+                          toast.success("Gambar terunggah");
+                        } catch (err) {
+                          toast.error(err instanceof Error ? err.message : "Gagal mengunggah gambar");
+                        } finally {
+                          setUploading(false);
+                        }
+                      }}
+                    />
+                  </label>
+                )}
               </div>
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="grid gap-1.5">
