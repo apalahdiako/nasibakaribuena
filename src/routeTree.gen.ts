@@ -22,6 +22,7 @@ import { Route as AdminAnalitikRouteImport } from './routes/admin.analitik'
 import { Route as AdminInboxRouteImport } from './routes/admin.inbox'
 import { Route as AdminInventoriRouteImport } from './routes/admin.inventori'
 import { Route as AdminInvoiceRouteImport } from './routes/admin.invoice'
+import { Route as AdminKasbonRouteImport } from './routes/admin.kasbon'
 import { Route as AdminKasirRouteImport } from './routes/admin.kasir'
 import { Route as AdminKeuanganRouteImport } from './routes/admin.keuangan'
 import { Route as AdminMenuRouteImport } from './routes/admin.menu'
@@ -100,6 +101,11 @@ const AdminInvoiceRoute = AdminInvoiceRouteImport.update({
   path: '/invoice',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminKasbonRoute = AdminKasbonRouteImport.update({
+  id: '/kasbon',
+  path: '/kasbon',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminKasirRoute = AdminKasirRouteImport.update({
   id: '/kasir',
   path: '/kasir',
@@ -174,6 +180,7 @@ export interface FileRoutesByFullPath {
   '/admin/inbox': typeof AdminInboxRoute
   '/admin/inventori': typeof AdminInventoriRoute
   '/admin/invoice': typeof AdminInvoiceRoute
+  '/admin/kasbon': typeof AdminKasbonRoute
   '/admin/kasir': typeof AdminKasirRoute
   '/admin/keuangan': typeof AdminKeuanganRoute
   '/admin/menu': typeof AdminMenuRoute
@@ -199,6 +206,7 @@ export interface FileRoutesByTo {
   '/admin/inbox': typeof AdminInboxRoute
   '/admin/inventori': typeof AdminInventoriRoute
   '/admin/invoice': typeof AdminInvoiceRoute
+  '/admin/kasbon': typeof AdminKasbonRoute
   '/admin/kasir': typeof AdminKasirRoute
   '/admin/keuangan': typeof AdminKeuanganRoute
   '/admin/menu': typeof AdminMenuRoute
@@ -227,6 +235,7 @@ export interface FileRoutesById {
   '/admin/inbox': typeof AdminInboxRoute
   '/admin/inventori': typeof AdminInventoriRoute
   '/admin/invoice': typeof AdminInvoiceRoute
+  '/admin/kasbon': typeof AdminKasbonRoute
   '/admin/kasir': typeof AdminKasirRoute
   '/admin/keuangan': typeof AdminKeuanganRoute
   '/admin/menu': typeof AdminMenuRoute
@@ -256,6 +265,7 @@ export interface FileRouteTypes {
     | '/admin/inbox'
     | '/admin/inventori'
     | '/admin/invoice'
+    | '/admin/kasbon'
     | '/admin/kasir'
     | '/admin/keuangan'
     | '/admin/menu'
@@ -281,6 +291,7 @@ export interface FileRouteTypes {
     | '/admin/inbox'
     | '/admin/inventori'
     | '/admin/invoice'
+    | '/admin/kasbon'
     | '/admin/kasir'
     | '/admin/keuangan'
     | '/admin/menu'
@@ -308,6 +319,7 @@ export interface FileRouteTypes {
     | '/admin/inbox'
     | '/admin/inventori'
     | '/admin/invoice'
+    | '/admin/kasbon'
     | '/admin/kasir'
     | '/admin/keuangan'
     | '/admin/menu'
@@ -427,6 +439,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminInvoiceRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/kasbon': {
+      id: '/admin/kasbon'
+      path: '/kasbon'
+      fullPath: '/admin/kasbon'
+      preLoaderRoute: typeof AdminKasbonRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/kasir': {
       id: '/admin/kasir'
       path: '/kasir'
@@ -519,6 +538,7 @@ interface AdminRouteChildren {
   AdminInboxRoute: typeof AdminInboxRoute
   AdminInventoriRoute: typeof AdminInventoriRoute
   AdminInvoiceRoute: typeof AdminInvoiceRoute
+  AdminKasbonRoute: typeof AdminKasbonRoute
   AdminKasirRoute: typeof AdminKasirRoute
   AdminKeuanganRoute: typeof AdminKeuanganRoute
   AdminMenuRoute: typeof AdminMenuRoute
@@ -537,6 +557,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminInboxRoute: AdminInboxRoute,
   AdminInventoriRoute: AdminInventoriRoute,
   AdminInvoiceRoute: AdminInvoiceRoute,
+  AdminKasbonRoute: AdminKasbonRoute,
   AdminKasirRoute: AdminKasirRoute,
   AdminKeuanganRoute: AdminKeuanganRoute,
   AdminMenuRoute: AdminMenuRoute,
