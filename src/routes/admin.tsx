@@ -206,12 +206,14 @@ function AdminLayout() {
               <LiveBadge />
             </div>
             <div className="flex items-center gap-3">
-            <NotificationBell />
-            <div className="text-right text-xs text-muted-foreground">
-              <p className="font-semibold text-foreground">{user.email}</p>
-              <p className="capitalize">{role}</p>
+              <NotificationBell />
+              <div className="text-right text-xs text-muted-foreground">
+                <p className="font-semibold text-foreground">{user.email}</p>
+                <p className="capitalize">{role}</p>
+              </div>
             </div>
           </div>
+        </header>
         </header>
         <main className="px-4 py-6 md:px-7 md:py-8">
           <Outlet />
