@@ -8,6 +8,7 @@ import { promosQuery, menuQuery, type Promo } from "@/lib/queries";
 import { useRealtime } from "@/hooks/useRealtime";
 import { logActivity } from "@/lib/activity";
 import { rupiah, tanggal } from "@/lib/format";
+import { uploadPromoImage, MAX_FLYER_MB } from "@/lib/upload";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -39,6 +40,7 @@ function PromoAdmin() {
   const { data: menu = [] } = useQuery(menuQuery);
   const [draft, setDraft] = useState<Draft | null>(null);
   const [busy, setBusy] = useState(false);
+  const [uploading, setUploading] = useState(false);
   useRealtime({ channelName: "promo-admin", tables: { promos: ["promos"] } });
 
   async function save() {
