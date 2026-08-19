@@ -186,15 +186,61 @@ export function CartSheet() {
                   rows={2}
                 />
               </div>
+              <div className="grid gap-1.5">
+                <Label htmlFor="cart-voucher" className="flex items-center gap-1.5">
+                  <TicketPercent className="h-4 w-4 text-primary" /> Kode voucher
+                </Label>
+                {applied ? (
+                  <div className="flex items-center justify-between rounded-xl border border-primary/40 bg-primary/5 px-3 py-2">
+                    <div className="text-xs">
+                      <p className="font-bold text-primary">{applied.voucher.code}</p>
+                      <p className="text-muted-foreground">Hemat {rupiah(discount)}</p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setApplied(null);
+                        setVoucherCode("");
+                      }}
+                      aria-label="Lepas voucher"
+                      className="text-muted-foreground hover:text-destructive"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <Input
+                      id="cart-voucher"
+                      value={voucherCode}
+                      maxLength={30}
+                      onChange={(e) => setVoucherCode(e.target.value.toUpperCase())}
+                      placeholder="Contoh: HEMAT10"
+                    />
+                    <Button variant="outline" disabled={checking} onClick={applyVoucher}>
+                      {checking ? "Cek…" : "Pakai"}
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>
 
         {items.length > 0 && (
           <div className="space-y-3 border-t border-border bg-background px-5 py-4">
+            <div className="flex items-center justify-between text-sm text-muted-foreground">
+              <span>Subtotal</span>
+              <span>{rupiah(total)}</span>
+            </div>
+            {discount > 0 && (
+              <div className="flex items-center justify-between text-sm text-primary">
+                <span>Diskon voucher {applied?.voucher.code}</span>
+                <span>-{rupiah(discount)}</span>
+              </div>
+            )}
             <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Total</span>
-              <span className="font-display text-xl font-extrabold text-primary">{rupiah(total)}</span>
+              <span className="text-sm text-muted-foreground">Total bayar</span>
+              <span className="font-display text-xl font-extrabold text-primary">{rupiah(grandTotal)}</span>
             </div>
             <Button variant="gold" className="w-full" disabled={sending} onClick={() => checkout("whatsapp")}>
               Pesan via WhatsApp
