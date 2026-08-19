@@ -183,9 +183,37 @@ function PromoAdmin() {
                 <Textarea rows={3} value={draft.description ?? ""} onChange={(e) => setDraft({ ...draft, description: e.target.value })} />
               </div>
               <div className="grid gap-1.5">
-                <Label>URL banner</Label>
-                <Input value={draft.image_url ?? ""} onChange={(e) => setDraft({ ...draft, image_url: e.target.value })} />
+                <Label>Flyer / banner promo</Label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  disabled={uploading}
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    e.target.value = "";
+                    if (!file) return;
+                    setUploading(true);
+                    try {
+                      const url = await uploadPromoImage(file);
+                      setDraft((d) => ({ ...(d ?? {}), image_url: url }));
+                      toast.success("Flyer terunggah");
+                    } catch (err) {
+                      toast.error(err instanceof Error ? err.message : "Gagal upload flyer");
+                    }
+                    setUploading(false);
+                  }}
+                  className="block w-full cursor-pointer rounded-md border border-border bg-background px-3 py-2 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-1 file:text-primary-foreground"
+                />
+                <p className="text-[0.7rem] text-muted-foreground">
+                  {uploading ? "Mengunggah…" : `Rekomendasi flyer portrait 1080×1350 px (4:5) atau 1080×1440 px (3:4), maks ${MAX_FLYER_MB}MB.`}
+                </p>
+                <Input
+                  placeholder="atau tempel URL gambar"
+                  value={draft.image_url ?? ""}
+                  onChange={(e) => setDraft({ ...draft, image_url: e.target.value })}
+                />
               </div>
+
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="grid gap-1.5">
                   <Label>Menu terkait</Label>
