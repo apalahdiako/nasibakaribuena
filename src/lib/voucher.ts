@@ -36,7 +36,7 @@ export async function validateVoucherCode(code: string, subtotal: number): Promi
 export async function redeemVoucher(params: {
   voucher: Voucher;
   discount: number;
-  refType: "pos" | "invoice";
+  refType: "pos" | "invoice" | "web";
   refId?: string | null;
   customerName?: string | null;
   actorEmail?: string | null;
