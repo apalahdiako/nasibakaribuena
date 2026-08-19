@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
+import { Minus, Plus, Trash2, ShoppingBag, TicketPercent, X } from "lucide-react";
 import { toast } from "sonner";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useCart, buildOrderText } from "@/lib/cart";
 import { rupiah, waLink } from "@/lib/format";
 import { settingsQuery } from "@/lib/queries";
+import { validateVoucherCode, redeemVoucher, type Voucher } from "@/lib/voucher";
 
 export function CartSheet() {
   const { items, total, count, open, setOpen, updateQty, remove, clear } = useCart();
@@ -19,6 +20,38 @@ export function CartSheet() {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [sending, setSending] = useState(false);
+  const [voucherCode, setVoucherCode] = useState("");
+  const [checking, setChecking] = useState(false);
+  const [applied, setApplied] = useState<{ voucher: Voucher; discount: number } | null>(null);
+
+  const discount = applied ? Math.min(applied.discount, total) : 0;
+  const grandTotal = Math.max(0, total - discount);
+
+  // Voucher batal otomatis bila isi keranjang berubah sehingga syaratnya tak lagi terpenuhi.
+  useEffect(() => {
+    if (!applied) return;
+    if (items.length === 0) {
+      setApplied(null);
+      return;
+    }
+    if (total < Number(applied.voucher.min_spend)) {
+      setApplied(null);
+      toast.info("Voucher dilepas karena total belanja di bawah minimum.");
+    }
+  }, [items.length, total, applied]);
+
+  async function applyVoucher() {
+    setChecking(true);
+    const res = await validateVoucherCode(voucherCode, total);
+    setChecking(false);
+    if (!res.ok) {
+      setApplied(null);
+      toast.error(res.reason);
+      return;
+    }
+    setApplied({ voucher: res.voucher, discount: res.discount });
+    toast.success(`Voucher ${res.voucher.code} dipakai — hemat ${rupiah(res.discount)}`);
+  }
 
   async function checkout(channel: "whatsapp" | "gofood" | "grabfood") {
     if (items.length === 0) return;
@@ -28,7 +61,17 @@ export function CartSheet() {
     }
     setSending(true);
     const origin = typeof window !== "undefined" ? window.location.origin : "";
-    const text = buildOrderText({ items, total, name: name.trim(), address: address.trim(), phone: phone.trim(), origin });
+    const baseText = buildOrderText({
+      items,
+      total: grandTotal,
+      name: name.trim(),
+      address: address.trim(),
+      phone: phone.trim(),
+      origin,
+    });
+    const text = applied
+      ? `${baseText}\n\nVoucher: ${applied.voucher.code} (-${rupiah(discount)})`
+      : baseText;
 
     const { error } = await supabase.from("orders_log").insert({
       customer_name: name.trim().slice(0, 100),
@@ -42,11 +85,24 @@ export function CartSheet() {
         price: i.price,
         subtotal: i.price * i.qty,
       })),
-      total,
+      total: grandTotal,
       channel,
-      note: "",
+      note: applied ? `Voucher ${applied.voucher.code} -${discount}` : "",
     });
     if (error) console.error(error);
+
+    if (applied) {
+      try {
+        await redeemVoucher({
+          voucher: applied.voucher,
+          discount,
+          refType: "web",
+          customerName: name.trim() || null,
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
 
     let url = "";
     if (channel === "whatsapp") url = waLink(settings?.wa_number ?? "6283160599421", text);
@@ -61,6 +117,7 @@ export function CartSheet() {
     window.open(url, "_blank", "noopener");
     toast.success("Pesanan dikirim. Lanjutkan di aplikasi yang terbuka.");
   }
+
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
