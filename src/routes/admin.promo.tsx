@@ -8,6 +8,7 @@ import { promosQuery, menuQuery, type Promo } from "@/lib/queries";
 import { useRealtime } from "@/hooks/useRealtime";
 import { logActivity } from "@/lib/activity";
 import { rupiah, tanggal } from "@/lib/format";
+import { uploadPromoImage, MAX_FLYER_MB } from "@/lib/upload";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -39,6 +40,7 @@ function PromoAdmin() {
   const { data: menu = [] } = useQuery(menuQuery);
   const [draft, setDraft] = useState<Draft | null>(null);
   const [busy, setBusy] = useState(false);
+  const [uploading, setUploading] = useState(false);
   useRealtime({ channelName: "promo-admin", tables: { promos: ["promos"] } });
 
   async function save() {
@@ -105,19 +107,24 @@ function PromoAdmin() {
         </Button>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {promos.length === 0 && <p className="text-sm text-muted-foreground">Belum ada promo.</p>}
         {promos.map((p) => {
           const expired = !!p.end_date && p.end_date < today;
           return (
             <article key={p.id} className="overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
-              {p.image_url && <img src={p.image_url} alt={p.title} className="h-32 w-full object-cover" loading="lazy" />}
+              {p.image_url && (
+                <div className="aspect-[3/4] w-full bg-muted">
+                  <img src={p.image_url} alt={p.title} className="h-full w-full object-contain" loading="lazy" />
+                </div>
+              )}
               <div className="space-y-2 p-4">
                 <div className="flex items-start justify-between gap-2">
                   <p className="font-bold">{p.title}</p>
                   {expired && <span className="rounded-full bg-destructive/10 px-2 py-0.5 text-[0.65rem] text-destructive">Kedaluwarsa</span>}
                 </div>
                 <p className="line-clamp-2 text-xs text-muted-foreground">{p.description}</p>
+
                 {p.promo_price ? (
                   <p className="text-sm">
                     <span className="mr-2 text-muted-foreground line-through">{p.original_price ? rupiah(p.original_price) : ""}</span>
@@ -178,9 +185,37 @@ function PromoAdmin() {
                 <Textarea rows={3} value={draft.description ?? ""} onChange={(e) => setDraft({ ...draft, description: e.target.value })} />
               </div>
               <div className="grid gap-1.5">
-                <Label>URL banner</Label>
-                <Input value={draft.image_url ?? ""} onChange={(e) => setDraft({ ...draft, image_url: e.target.value })} />
+                <Label>Flyer / banner promo</Label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  disabled={uploading}
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    e.target.value = "";
+                    if (!file) return;
+                    setUploading(true);
+                    try {
+                      const url = await uploadPromoImage(file);
+                      setDraft((d) => ({ ...(d ?? {}), image_url: url }));
+                      toast.success("Flyer terunggah");
+                    } catch (err) {
+                      toast.error(err instanceof Error ? err.message : "Gagal upload flyer");
+                    }
+                    setUploading(false);
+                  }}
+                  className="block w-full cursor-pointer rounded-md border border-border bg-background px-3 py-2 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-1 file:text-primary-foreground"
+                />
+                <p className="text-[0.7rem] text-muted-foreground">
+                  {uploading ? "Mengunggah…" : `Rekomendasi flyer portrait 1080×1350 px (4:5) atau 1080×1440 px (3:4), maks ${MAX_FLYER_MB}MB.`}
+                </p>
+                <Input
+                  placeholder="atau tempel URL gambar"
+                  value={draft.image_url ?? ""}
+                  onChange={(e) => setDraft({ ...draft, image_url: e.target.value })}
+                />
               </div>
+
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="grid gap-1.5">
                   <Label>Menu terkait</Label>
@@ -248,7 +283,11 @@ function PromoAdmin() {
               <div className="rounded-2xl border border-dashed border-border p-4">
                 <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Preview</p>
                 <div className="overflow-hidden rounded-xl bg-muted">
-                  {draft.image_url && <img src={draft.image_url} alt="" className="h-28 w-full object-cover" />}
+                  {draft.image_url && (
+                    <div className="aspect-[3/4] w-full bg-muted">
+                      <img src={draft.image_url} alt="" className="h-full w-full object-contain" />
+                    </div>
+                  )}
                   <div className="p-3">
                     <p className="font-bold">{draft.title || "Judul promo"}</p>
                     <p className="text-xs text-muted-foreground">{draft.description || "Deskripsi singkat promo"}</p>
