@@ -283,7 +283,11 @@ function PromoAdmin() {
               <div className="rounded-2xl border border-dashed border-border p-4">
                 <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Preview</p>
                 <div className="overflow-hidden rounded-xl bg-muted">
-                  {draft.image_url && <img src={draft.image_url} alt="" className="h-28 w-full object-cover" />}
+                  {draft.image_url && (
+                    <div className="aspect-[3/4] w-full bg-muted">
+                      <img src={draft.image_url} alt="" className="h-full w-full object-contain" />
+                    </div>
+                  )}
                   <div className="p-3">
                     <p className="font-bold">{draft.title || "Judul promo"}</p>
                     <p className="text-xs text-muted-foreground">{draft.description || "Deskripsi singkat promo"}</p>

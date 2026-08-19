@@ -47,10 +47,14 @@ function PromoPage() {
               </p>
             </div>
           ) : (
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {aktif.map((p) => (
                 <article key={p.id} className="lift overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
-                  {p.image_url ? <img src={p.image_url} alt={p.title} loading="lazy" className="h-52 w-full object-cover" /> : null}
+                  {p.image_url ? (
+                    <div className="aspect-[4/5] w-full bg-muted">
+                      <img src={p.image_url} alt={p.title} loading="lazy" className="h-full w-full object-contain" />
+                    </div>
+                  ) : null}
                   <div className="p-6">
                     <h2 className="font-display text-xl font-bold">{p.title}</h2>
                     <p className="mt-2 text-sm text-muted-foreground">{p.description}</p>
