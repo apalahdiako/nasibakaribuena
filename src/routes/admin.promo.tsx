@@ -105,19 +105,24 @@ function PromoAdmin() {
         </Button>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {promos.length === 0 && <p className="text-sm text-muted-foreground">Belum ada promo.</p>}
         {promos.map((p) => {
           const expired = !!p.end_date && p.end_date < today;
           return (
             <article key={p.id} className="overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
-              {p.image_url && <img src={p.image_url} alt={p.title} className="h-32 w-full object-cover" loading="lazy" />}
+              {p.image_url && (
+                <div className="aspect-[3/4] w-full bg-muted">
+                  <img src={p.image_url} alt={p.title} className="h-full w-full object-contain" loading="lazy" />
+                </div>
+              )}
               <div className="space-y-2 p-4">
                 <div className="flex items-start justify-between gap-2">
                   <p className="font-bold">{p.title}</p>
                   {expired && <span className="rounded-full bg-destructive/10 px-2 py-0.5 text-[0.65rem] text-destructive">Kedaluwarsa</span>}
                 </div>
                 <p className="line-clamp-2 text-xs text-muted-foreground">{p.description}</p>
+
                 {p.promo_price ? (
                   <p className="text-sm">
                     <span className="mr-2 text-muted-foreground line-through">{p.original_price ? rupiah(p.original_price) : ""}</span>
